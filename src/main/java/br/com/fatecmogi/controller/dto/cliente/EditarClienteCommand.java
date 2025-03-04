@@ -16,7 +16,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class EditarClienteCommand {
 
-    @NotBlank(message = "Genêro é obrigatório")
+    @NotBlank(message = "Gênero é obrigatório")
     private Long generoId;
 
     @NotBlank(message = "Nome é obrigatório")
@@ -36,12 +36,5 @@ public class EditarClienteCommand {
 
     @NotBlank(message = "DDD do telefone é obrigatório")
     private String ddd;
-
-    @NotBlank(message = "E-mail é obrigatório")
-    @Email(message = "E-mail inválido")
-    private String email;
-
-    @NotBlank(message = "Senha é obrigatória")
-    private String senha;
-
+    
 }

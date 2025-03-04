@@ -29,7 +29,7 @@ public class ClienteController {
 
     @GetMapping("/{id}")
     public Response buscar(@PathVariable("id") Long id) {
-        var cliente = clienteService.buscar(id);
+        var cliente  = clienteService.buscar(id);
         return Response.status(Response.Status.OK).entity(cliente).build();
     }
 
