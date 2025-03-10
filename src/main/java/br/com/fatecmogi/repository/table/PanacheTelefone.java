@@ -26,4 +26,9 @@ public class PanacheTelefone extends PanacheEntityBase {
     @JoinColumn(name = "tlf_tpf_id", referencedColumnName = "tpf_id")
     private PanacheTipoTelefone tipoTelefone;
 
+    public void unreferrenceDependecies() {
+        this.tipoTelefone = null;
+    }
+
+
 }

@@ -7,12 +7,14 @@ import br.com.fatecmogi.model.entity.endereco.EnderecoResidencial;
 import br.com.fatecmogi.model.enums.TipoEndereco;
 import br.com.fatecmogi.model.repository.EnderecoRepository;
 import br.com.fatecmogi.repository.mapper.PanacheEnderecoMapper;
+import br.com.fatecmogi.repository.table.PanacheCliente;
 import br.com.fatecmogi.repository.table.PanacheEnderecoCobranca;
 import br.com.fatecmogi.repository.table.PanacheEnderecoEntrega;
 import br.com.fatecmogi.repository.table.PanacheEnderecoResidencial;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.persistence.EntityManager;
 
 import java.util.Optional;
 
@@ -24,16 +26,20 @@ public class EnderecoPanacheRepository implements EnderecoRepository {
 
     @Override
     public Endereco save(Endereco endereco) {
+        PanacheCliente panacheCliente = PanacheCliente.findById(endereco.getCliente().getId());
         if (endereco instanceof EnderecoResidencial) {
             PanacheEnderecoResidencial panacheEnderecoResidencial = panacheEnderecoMapper.fromEnderecoResidencial((EnderecoResidencial) endereco);
+            panacheEnderecoResidencial.setCliente(panacheCliente);
             panacheEnderecoResidencial.persist();
             return panacheEnderecoMapper.from(panacheEnderecoResidencial);
         } else if (endereco instanceof EnderecoCobranca) {
             PanacheEnderecoCobranca panacheEnderecoCobranca = panacheEnderecoMapper.fromEnderecoCobranca((EnderecoCobranca) endereco);
+            panacheEnderecoCobranca.setCliente(panacheCliente);
             panacheEnderecoCobranca.persist();
             return panacheEnderecoMapper.from(panacheEnderecoCobranca);
         } else {
             PanacheEnderecoEntrega panacheEnderecoEntrega = panacheEnderecoMapper.fromEnderecoEntrega((EnderecoEntrega) endereco);
+            panacheEnderecoEntrega.setCliente(panacheCliente);
             panacheEnderecoEntrega.persist();
             return panacheEnderecoMapper.from(panacheEnderecoEntrega);
         }
@@ -42,16 +48,21 @@ public class EnderecoPanacheRepository implements EnderecoRepository {
     @Override
     public Endereco update(Endereco endereco) {
         if (endereco instanceof EnderecoResidencial) {
-            PanacheEnderecoResidencial panacheEnderecoResidencial = panacheEnderecoMapper.fromEnderecoResidencial((EnderecoResidencial) endereco);
+            PanacheEnderecoResidencial panacheEnderecoResidencialSalvo = PanacheEnderecoResidencial.findById(endereco.getId());
+            panacheEnderecoResidencialSalvo.unreferrenceDependecies();
+            PanacheEnderecoResidencial panacheEnderecoResidencial = panacheEnderecoMapper.updateEnderecoResidencial(panacheEnderecoResidencialSalvo, endereco);
             panacheEnderecoResidencial.persist();
             return panacheEnderecoMapper.from(panacheEnderecoResidencial);
         } else if (endereco instanceof EnderecoCobranca) {
-            PanacheEnderecoCobranca panacheEnderecoCobranca = panacheEnderecoMapper.fromEnderecoCobranca((EnderecoCobranca) endereco);
+            PanacheEnderecoCobranca panacheEnderecoCobrancaSalvo = PanacheEnderecoCobranca.findById(endereco.getId());
+            panacheEnderecoCobrancaSalvo.unreferrenceDependecies();
+            PanacheEnderecoCobranca panacheEnderecoCobranca = panacheEnderecoMapper.updateEnderecoCobranca(panacheEnderecoCobrancaSalvo, endereco);
             panacheEnderecoCobranca.persist();
             return panacheEnderecoMapper.from(panacheEnderecoCobranca);
         } else {
-            PanacheEnderecoEntrega panacheEnderecoEntrega = panacheEnderecoMapper.fromEnderecoEntrega((EnderecoEntrega) endereco);
-            panacheEnderecoEntrega.persist();
+            PanacheEnderecoEntrega panacheEnderecoEntregaSalvo = PanacheEnderecoEntrega.findById(endereco.getId());
+            panacheEnderecoEntregaSalvo.unreferrenceDependecies();
+            PanacheEnderecoEntrega panacheEnderecoEntrega = panacheEnderecoMapper.updateEnderecoEntrega(panacheEnderecoEntregaSalvo, endereco);
             return panacheEnderecoMapper.from(panacheEnderecoEntrega);
         }
     }
@@ -59,9 +70,9 @@ public class EnderecoPanacheRepository implements EnderecoRepository {
     @Override
     public void delete(Long id, TipoEndereco tipoEndereco) {
         switch (tipoEndereco) {
-            case RESIDENCIAL -> PanacheEnderecoResidencial.delete("ers_id", id);
-            case COBRANCA -> PanacheEnderecoCobranca.delete("ecb_id", id);
-            case ENTREGA -> PanacheEnderecoEntrega.delete("eet_id", id);
+            case RESIDENCIAL -> PanacheEnderecoResidencial.delete("id", id);
+            case COBRANCA -> PanacheEnderecoCobranca.delete("id", id);
+            case ENTREGA -> PanacheEnderecoEntrega.delete("id", id);
         }
     }
 

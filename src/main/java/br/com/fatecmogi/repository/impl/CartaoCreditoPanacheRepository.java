@@ -4,6 +4,7 @@ import br.com.fatecmogi.model.entity.cartaoCredito.CartaoCredito;
 import br.com.fatecmogi.model.repository.CartaoCreditoRepository;
 import br.com.fatecmogi.repository.mapper.PanacheCartaoCreditoMapper;
 import br.com.fatecmogi.repository.table.PanacheCartaoCredito;
+import br.com.fatecmogi.repository.table.PanacheCliente;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
@@ -17,14 +18,17 @@ public class CartaoCreditoPanacheRepository implements CartaoCreditoRepository {
 
     @Override
     public CartaoCredito save(CartaoCredito cartaoCredito) {
+        PanacheCliente panacheCliente = PanacheCliente.findById(cartaoCredito.getCliente().getId());
         PanacheCartaoCredito panacheCartaoCredito = panacheCartaoCreditoMapper.from(cartaoCredito);
+        panacheCartaoCredito.setCliente(panacheCliente);
         panacheCartaoCredito.persist();
         return panacheCartaoCreditoMapper.from(panacheCartaoCredito);
     }
 
     @Override
     public CartaoCredito update(CartaoCredito cartaoCredito) {
-        PanacheCartaoCredito panacheCartaoCredito = panacheCartaoCreditoMapper.from(cartaoCredito);
+        PanacheCartaoCredito panacheCartaoCreditoSalvo = PanacheCartaoCredito.findById(cartaoCredito.getId());
+        PanacheCartaoCredito panacheCartaoCredito = panacheCartaoCreditoMapper.update(panacheCartaoCreditoSalvo ,cartaoCredito);
         panacheCartaoCredito.persist();
         return panacheCartaoCreditoMapper.from(panacheCartaoCredito);
     }
@@ -40,7 +44,7 @@ public class CartaoCreditoPanacheRepository implements CartaoCreditoRepository {
 
     @Override
     public void delete(Long id) {
-        PanacheCartaoCredito.delete("crc_id", id);
+        PanacheCartaoCredito.delete("id", id);
     }
 
 }

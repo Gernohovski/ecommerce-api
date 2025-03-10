@@ -54,10 +54,9 @@ public class CartaoCreditoServiceImpl implements CartaoCreditoService {
     public CartaoCredito atualizar(Long id, EditarCartaoCreditoClienteCommand command) {
         commandValidator.validate(command);
         var cartaoCredito = cartaoCreditoRepository.findById(id).orElseThrow(CartaoCreditoNaoEncontratoException::new);
-        if (Objects.equals(cartaoCredito.getCliente().getId(), command.getClienteId())) {
-            throw new CartaoCreditoClienteDiferenteException();
-        }
+        var cliente = clienteRepository.findById(command.getClienteId()).orElseThrow(ClienteNaoEncontratoException::new);
         cartaoCreditoMapper.update(cartaoCredito, command);
+        cartaoCredito.setCliente(cliente);
         return cartaoCreditoRepository.update(cartaoCredito);
     }
 

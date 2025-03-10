@@ -1,9 +1,11 @@
 package br.com.fatecmogi.repository.table;
 
+import br.com.fatecmogi.model.entity.endereco.EnderecoResidencial;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -42,35 +44,59 @@ public class PanacheCliente extends PanacheEntityBase {
     @Column(name = "clt_ativo")
     private boolean ativo;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "clt_tlf_id", referencedColumnName = "tlf_id")
     private PanacheTelefone telefone;
 
-    @OneToMany(mappedBy = "cliente")
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.MERGE)
     private List<PanacheEnderecoResidencial> enderecoResidencial;
 
-    @OneToMany(mappedBy = "cliente")
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.MERGE)
     private List<PanacheEnderecoCobranca> enderecoCobranca;
 
-    @OneToMany(mappedBy = "cliente")
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.MERGE)
     private List<PanacheEnderecoEntrega> enderecoEntrega;
 
-    @OneToMany(mappedBy = "cliente")
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.MERGE)
     private List<PanacheCartaoCredito> cartaoCredito;
 
     public void persistDependecies() {
-        PanacheEnderecoResidencial.persist(this.enderecoResidencial);
-        PanacheEnderecoCobranca.persist(this.enderecoCobranca);
-        PanacheEnderecoEntrega.persist(this.enderecoEntrega);
-        PanacheCartaoCredito.persist(this.cartaoCredito);
-        PanacheTelefone.persist(this.telefone);
+        for(PanacheEnderecoResidencial endereco : this.enderecoResidencial) {
+            if(endereco.getId() == null) {
+                PanacheEnderecoResidencial.persist(this.enderecoResidencial);
+            }
+        }
+        for(PanacheEnderecoCobranca endereco : this.enderecoCobranca) {
+            if(endereco.getId() == null) {
+                PanacheEnderecoCobranca.persist(this.enderecoCobranca);
+            }
+        }
+        for(PanacheEnderecoEntrega endereco : this.enderecoEntrega) {
+            if(endereco.getId() == null) {
+                PanacheEnderecoEntrega.persist(this.enderecoEntrega);
+            }
+        }
+        for(PanacheCartaoCredito cartao : this.cartaoCredito) {
+            if(cartao.getId() == null) {
+                PanacheCartaoCredito.persist(this.cartaoCredito);
+            }
+        }
+        if(this.telefone.getId() == null) {
+            PanacheTelefone.persist(this.telefone);
+        }
     }
 
     public void unreferrenceDependecies() {
-        this.enderecoResidencial = null;
-        this.enderecoCobranca = null;
-        this.enderecoEntrega = null;
-        this.telefone = null;
+        this.genero = null;
+    }
+
+    public void deleteDependecies() {
+        this.enderecoResidencial.forEach(PanacheEnderecoResidencial::delete);
+        this.enderecoCobranca.forEach(PanacheEnderecoCobranca::delete);
+        this.enderecoEntrega.forEach(PanacheEnderecoEntrega::delete);
+        this.cartaoCredito.forEach(PanacheCartaoCredito::delete);
+        this.telefone.delete();
+        this.genero = null;
     }
 
 }

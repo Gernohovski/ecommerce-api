@@ -54,4 +54,9 @@ public class PanacheEnderecoCobranca extends PanacheEntityBase {
     @ManyToOne
     @JoinColumn(name = "ecb_clt_id", referencedColumnName = "clt_id")
     private PanacheCliente cliente;
+
+    public void unreferrenceDependecies() {
+        this.tipoLogradouro = null;
+        this.tipoResidencia = null;
+    }
 }

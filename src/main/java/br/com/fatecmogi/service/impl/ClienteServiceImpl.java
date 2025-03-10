@@ -2,13 +2,16 @@ package br.com.fatecmogi.service.impl;
 
 import br.com.fatecmogi.controller.dto.cliente.CadastrarClienteCommand;
 import br.com.fatecmogi.controller.dto.cliente.EditarClienteCommand;
+import br.com.fatecmogi.controller.dto.cliente.EditarSenhaClienteCommand;
 import br.com.fatecmogi.controller.dto.cliente.FazerLoginCommand;
 import br.com.fatecmogi.controller.exceptionHandler.CommandValidator;
 import br.com.fatecmogi.controller.mapper.ClienteMapper;
 import br.com.fatecmogi.model.entity.cliente.Cliente;
+import br.com.fatecmogi.model.entity.cliente.Genero;
 import br.com.fatecmogi.model.entity.endereco.EnderecoResidencial;
 import br.com.fatecmogi.model.exception.cliente.ClienteNaoEncontratoException;
 import br.com.fatecmogi.model.exception.cliente.GeneroNaoEncontradoException;
+import br.com.fatecmogi.model.exception.cliente.SenhaAtualInformadaInvalidaException;
 import br.com.fatecmogi.model.exception.cliente.SenhaClienteInvalidaException;
 import br.com.fatecmogi.model.repository.ClienteRepository;
 import br.com.fatecmogi.model.repository.GeneroRepository;
@@ -18,6 +21,8 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @ApplicationScoped
@@ -63,6 +68,19 @@ public class ClienteServiceImpl implements ClienteService {
 
     @Override
     @Transactional
+    public Cliente atualizarSenha(Long id, EditarSenhaClienteCommand command) {
+        commandValidator.validate(command);
+        var cliente = clienteRepository.findById(id).orElseThrow(ClienteNaoEncontratoException::new);
+        if(!senhaService.validarSenha(command.getSenhaAtual(), cliente.getSenha())) {
+            throw new SenhaAtualInformadaInvalidaException();
+        }
+        var clienteAtualizado = clienteMapper.update(cliente, command);
+        clienteAtualizado.setSenha(senhaService.encriptarSenha(clienteAtualizado.getSenha()));
+        return clienteRepository.update(clienteAtualizado);
+    }
+
+    @Override
+    @Transactional
     public Cliente inativar(Long id) {
         var cliente = clienteRepository.findById(id).orElseThrow(ClienteNaoEncontratoException::new);
         cliente.setAtivo(false);
@@ -79,6 +97,12 @@ public class ClienteServiceImpl implements ClienteService {
     @Override
     public Cliente buscar(Long id) {
         return clienteRepository.findById(id).orElseThrow(ClienteNaoEncontratoException::new);
+    }
+
+    @Override
+    public List<Cliente> filtrar(Long generoId, String nome, String cpf, String email) {
+        var cliente = Cliente.builder().genero(Genero.builder().id(generoId).build()).nome(nome).cpf(cpf).email(email).build();
+        return clienteRepository.findAllByExample(cliente);
     }
 
     @Override

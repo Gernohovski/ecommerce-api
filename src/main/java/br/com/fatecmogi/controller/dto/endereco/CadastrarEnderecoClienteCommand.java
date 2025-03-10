@@ -40,7 +40,6 @@ public class CadastrarEnderecoClienteCommand {
     @NotBlank
     private String cep;
 
-    @NotBlank
     private String observacoes;
 
     @NotBlank

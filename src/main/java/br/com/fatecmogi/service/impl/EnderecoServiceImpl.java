@@ -83,9 +83,6 @@ public class EnderecoServiceImpl implements EnderecoService {
         }
         var endereco = enderecoRepository.findById(id, tipoEndereco);
         var cliente = clienteRepository.findById(command.getClienteId()).orElseThrow(ClienteNaoEncontratoException::new);
-        if(!Objects.equals(command.getClienteId(), cliente.getId())) {
-            throw new EnderecoClienteDiferenteException();
-        }
         var tipoLogradouro = tipoLogradouroRepository.findById(command.getTipoLogradouroId()).orElseThrow(TipoLogradouroNaoEncontratoException::new);
         var tipoResidencia = tipoResidenciaRepository.findById(command.getTipoResidenciaId()).orElseThrow(TipoResidenciaNaoEncontratoException::new);
         Endereco enderecoAtualizado = null;

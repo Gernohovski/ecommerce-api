@@ -32,4 +32,8 @@ public class PanacheCartaoCredito extends PanacheEntityBase {
     @ManyToOne
     @JoinColumn(name = "crc_clt_id", referencedColumnName = "clt_id")
     private PanacheCliente cliente;
+
+    public void unreferrenceDependecies() {
+        this.bandeira = null;
+    }
 }

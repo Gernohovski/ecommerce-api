@@ -11,6 +11,8 @@ public interface ClienteRepository {
 
     List<Cliente> findAll();
 
+    List<Cliente> findAllByExample(Cliente cliente);
+
     Optional<Cliente> findById(Long id);
 
     Cliente update(Cliente cliente);
