@@ -9,10 +9,7 @@ import br.com.fatecmogi.controller.mapper.ClienteMapper;
 import br.com.fatecmogi.model.entity.cliente.Cliente;
 import br.com.fatecmogi.model.entity.cliente.Genero;
 import br.com.fatecmogi.model.entity.endereco.EnderecoResidencial;
-import br.com.fatecmogi.model.exception.cliente.ClienteNaoEncontratoException;
-import br.com.fatecmogi.model.exception.cliente.GeneroNaoEncontradoException;
-import br.com.fatecmogi.model.exception.cliente.SenhaAtualInformadaInvalidaException;
-import br.com.fatecmogi.model.exception.cliente.SenhaClienteInvalidaException;
+import br.com.fatecmogi.model.exception.cliente.*;
 import br.com.fatecmogi.model.repository.ClienteRepository;
 import br.com.fatecmogi.model.repository.GeneroRepository;
 import br.com.fatecmogi.service.ClienteService;
@@ -47,6 +44,12 @@ public class ClienteServiceImpl implements ClienteService {
     @Transactional
     public Cliente salvar(CadastrarClienteCommand command) {
         commandValidator.validate(command);
+        if(clienteRepository.existsByCpf(command.getCpf())) {
+            throw new CpfJaCadastradoException();
+        }
+        if(clienteRepository.existsByEmail(command.getEmail())) {
+            throw new EmailJaCadastradoException();
+        }
         var genero = generoRepository.findById(command.getGeneroId()).orElseThrow(GeneroNaoEncontradoException::new);
         var cliente = clienteMapper.from(command);
         cliente.setGenero(genero);

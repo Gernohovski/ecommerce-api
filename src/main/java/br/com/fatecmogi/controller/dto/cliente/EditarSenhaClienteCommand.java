@@ -12,10 +12,10 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 public class EditarSenhaClienteCommand {
 
-    @NotBlank
+    @NotBlank(message = "A senha atual é obrigatória.")
     private String senhaAtual;
 
-    @NotBlank
+    @NotBlank(message = "A nova senha é obrigatória.")
     private String senha;
 
 }

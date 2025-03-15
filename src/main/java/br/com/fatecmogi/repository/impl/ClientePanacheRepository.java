@@ -69,6 +69,18 @@ public class ClientePanacheRepository implements ClienteRepository {
     }
 
     @Override
+    public boolean existsByCpf(String cpf) {
+        PanacheCliente panacheCliente = PanacheCliente.find("cpf", cpf).firstResult();
+        return panacheCliente != null;
+    }
+
+    @Override
+    public boolean existsByEmail(String email) {
+        PanacheCliente panacheCliente = PanacheCliente.find("email", email).firstResult();
+        return panacheCliente != null;
+    }
+
+    @Override
     public Optional<Cliente> findById(Long id) {
         PanacheCliente panacheCliente = PanacheCliente.findById(id);
         if (panacheCliente == null) {

@@ -13,19 +13,19 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 public class EditarCartaoCreditoClienteCommand {
 
-    @NotBlank
+    @NotBlank(message = "Número do cartão é obrigatório.")
     private String numero;
 
-    @NotBlank
+    @NotBlank(message = "Nome impresso no do cartão é obrigatório.")
     private String nomeImpresso;
 
-    @NotNull
+    @NotNull(message = "A bandeira do do cartão é obrigatório.")
     private Long bandeiraId;
 
-    @NotBlank
+    @NotBlank(message = "O código de segurança do cartão é obrigatório.")
     private String codigoSeguranca;
 
-    @NotNull
+    @NotNull(message = "O cliente do cartão de crédito é obrigatório.")
     private Long clienteId;
 
 }

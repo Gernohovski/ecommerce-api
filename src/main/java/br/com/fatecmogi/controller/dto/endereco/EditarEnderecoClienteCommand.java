@@ -13,42 +13,42 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 public class EditarEnderecoClienteCommand {
 
-    @NotNull
+    @NotNull(message = "Tipo da residência do endereço é obrigatória.")
     private Long tipoResidenciaId;
 
-    @NotNull
+    @NotNull(message = "Tipo do logradouro do endereço é obrigatória.")
     private Long tipoLogradouroId;
 
-    @NotBlank
+    @NotBlank(message = "Logradouro do endereço é obrigatório.")
     private String logradouro;
 
-    @NotBlank
+    @NotBlank(message = "Número do endereço é obrigatório.")
     private String numero;
 
-    @NotBlank
+    @NotBlank(message = "Bairro do endereço é obrigatório.")
     private String bairro;
 
-    @NotBlank
+    @NotBlank(message = "Cidade do endereço é obrigatória.")
     private String cidade;
 
-    @NotBlank
+    @NotBlank(message = "Cidade do endereço é obrigatória.")
     private String estado;
 
-    @NotBlank
+    @NotBlank(message = "País do endereço é obrigatório.")
     private String pais;
 
-    @NotBlank
+    @NotBlank(message = "CEP do endereço é obrigatório.")
     private String cep;
 
     private String observacoes;
 
-    @NotBlank
+    @NotBlank(message = "Frase de identificação do endereço é obrigatório.")
     private String fraseIdentificacao;
 
-    @NotNull
+    @NotNull(message = "O cliente do endereço é obrigatório.")
     private Long clienteId;
 
-    @NotBlank
+    @NotBlank(message = "O tipo do endereço é obrigatório.")
     private String tipoEndereco;
 
 }

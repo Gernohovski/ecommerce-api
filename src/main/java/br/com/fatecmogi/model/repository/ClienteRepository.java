@@ -13,6 +13,10 @@ public interface ClienteRepository {
 
     List<Cliente> findAllByExample(Cliente cliente);
 
+    boolean existsByCpf(String cpf);
+
+    boolean existsByEmail(String email);
+
     Optional<Cliente> findById(Long id);
 
     Cliente update(Cliente cliente);
