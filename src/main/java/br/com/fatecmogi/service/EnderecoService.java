@@ -6,12 +6,12 @@ import br.com.fatecmogi.model.entity.endereco.Endereco;
 
 public interface EnderecoService {
 
-    Endereco salvar(CadastrarEnderecoClienteCommand command);
+	Endereco salvar(CadastrarEnderecoClienteCommand command);
 
-    Endereco atualizar(Long id, EditarEnderecoClienteCommand command);
+	Endereco atualizar(Long id, EditarEnderecoClienteCommand command);
 
-    void deletar(Long id, String tipoEndereco);
+	void deletar(Long id, String tipoEndereco);
 
-    void tornarPrincipal(Long id, String tipoEndereco, Long clienteId);
+	void tornarPrincipal(Long id, String tipoEndereco, Long clienteId);
 
 }

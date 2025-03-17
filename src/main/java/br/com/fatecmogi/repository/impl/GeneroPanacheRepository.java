@@ -13,21 +13,22 @@ import java.util.Optional;
 @ApplicationScoped
 public class GeneroPanacheRepository implements GeneroRepository {
 
-    @Inject
-    PanacheGeneroMapper panacheGeneroMapper;
+	@Inject
+	PanacheGeneroMapper panacheGeneroMapper;
 
-    @Override
-    public List<Genero> findAll() {
-        List<PanacheGenero> panacheGenero = PanacheGenero.findAll().list();
-        return panacheGeneroMapper.from(panacheGenero);
-    }
+	@Override
+	public List<Genero> findAll() {
+		List<PanacheGenero> panacheGenero = PanacheGenero.findAll().list();
+		return panacheGeneroMapper.from(panacheGenero);
+	}
 
-    @Override
-    public Optional<Genero> findById(Long id) {
-        PanacheGenero panacheGenero = PanacheGenero.findById(id);
-        if (panacheGenero == null) {
-            return Optional.empty();
-        }
-        return Optional.of(panacheGeneroMapper.from(panacheGenero));
-    }
+	@Override
+	public Optional<Genero> findById(Long id) {
+		PanacheGenero panacheGenero = PanacheGenero.findById(id);
+		if (panacheGenero == null) {
+			return Optional.empty();
+		}
+		return Optional.of(panacheGeneroMapper.from(panacheGenero));
+	}
+
 }

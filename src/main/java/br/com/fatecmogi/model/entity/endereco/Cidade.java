@@ -13,8 +13,8 @@ import lombok.experimental.SuperBuilder;
 @RegisterForReflection
 public class Cidade {
 
-    private String nome;
+	private String nome;
 
-    private Estado estado;
+	private Estado estado;
 
 }

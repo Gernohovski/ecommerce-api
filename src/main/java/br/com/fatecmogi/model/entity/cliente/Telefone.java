@@ -13,12 +13,12 @@ import lombok.experimental.SuperBuilder;
 @RegisterForReflection
 public class Telefone {
 
-    private Long id;
+	private Long id;
 
-    private String ddd;
+	private String ddd;
 
-    private String telefone;
+	private String telefone;
 
-    private TipoTelefone tipoTelefone;
+	private TipoTelefone tipoTelefone;
 
 }

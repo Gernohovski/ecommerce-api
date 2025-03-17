@@ -10,14 +10,14 @@ import java.util.Set;
 @ApplicationScoped
 public class CommandValidator {
 
-    @Inject
-    Validator validator;
+	@Inject
+	Validator validator;
 
-    public <T> void validate(T command) {
-        Set<ConstraintViolation<T>> violations = validator.validate(command);
-        if (!violations.isEmpty()) {
-            throw new ValidationException(violations.iterator().next());
-        }
-    }
+	public <T> void validate(T command) {
+		Set<ConstraintViolation<T>> violations = validator.validate(command);
+		if (!violations.isEmpty()) {
+			throw new ValidationException(violations.iterator().next());
+		}
+	}
+
 }
-

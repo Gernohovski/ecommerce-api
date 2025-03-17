@@ -7,8 +7,8 @@ import java.util.Optional;
 
 public interface BandeiraCartaoRepository {
 
-    List<BandeiraCartao> findAll();
+	List<BandeiraCartao> findAll();
 
-    Optional<BandeiraCartao> findById(Long id);
+	Optional<BandeiraCartao> findById(Long id);
 
 }

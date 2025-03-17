@@ -4,8 +4,8 @@ import br.com.fatecmogi.controller.exceptionHandler.APIException;
 
 public class EnderecoNaoEncontradoException extends APIException {
 
-    public EnderecoNaoEncontradoException() {
-        super("Endereço não encontrado", 404);
-    }
+	public EnderecoNaoEncontradoException() {
+		super("Endereço não encontrado", 404);
+	}
 
 }

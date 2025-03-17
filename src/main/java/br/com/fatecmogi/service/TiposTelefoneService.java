@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface TiposTelefoneService {
 
-    List<TipoTelefone> findAll();
+	List<TipoTelefone> findAll();
 
 }

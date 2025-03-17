@@ -11,12 +11,12 @@ import lombok.Setter;
 @Setter
 public class PanacheBandeiraCartao extends PanacheEntityBase {
 
-    @Id
-    @Column(name = "bnc_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	@Column(name = "bnc_id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @Column(name = "bnc_nome")
-    private String nome;
+	@Column(name = "bnc_nome")
+	private String nome;
 
 }

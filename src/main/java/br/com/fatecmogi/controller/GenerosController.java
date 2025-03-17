@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/v1/generos")
 public class GenerosController {
 
-    @Inject
-    GenerosService generosService;
+	@Inject
+	GenerosService generosService;
 
-    @GetMapping
-    public Response listar() {
-        var generos = generosService.findAll();
-        return Response.status(Response.Status.OK).entity(generos).build();
-    }
+	@GetMapping
+	public Response listar() {
+		var generos = generosService.findAll();
+		return Response.status(Response.Status.OK).entity(generos).build();
+	}
 
 }

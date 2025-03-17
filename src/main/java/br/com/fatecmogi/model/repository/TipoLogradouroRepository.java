@@ -7,8 +7,8 @@ import java.util.Optional;
 
 public interface TipoLogradouroRepository {
 
-    List<TipoLogradouro> findAll();
+	List<TipoLogradouro> findAll();
 
-    Optional<TipoLogradouro> findById(Long id);
+	Optional<TipoLogradouro> findById(Long id);
 
 }

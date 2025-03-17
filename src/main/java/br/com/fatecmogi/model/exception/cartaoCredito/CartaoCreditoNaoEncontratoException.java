@@ -4,8 +4,8 @@ import br.com.fatecmogi.controller.exceptionHandler.APIException;
 
 public class CartaoCreditoNaoEncontratoException extends APIException {
 
-    public CartaoCreditoNaoEncontratoException() {
-        super("Cartao não encontrado", 404);
-    }
+	public CartaoCreditoNaoEncontratoException() {
+		super("Cartao não encontrado", 404);
+	}
 
 }

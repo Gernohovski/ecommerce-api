@@ -13,8 +13,8 @@ import lombok.experimental.SuperBuilder;
 @RegisterForReflection
 public class Bairro {
 
-    private String nome;
+	private String nome;
 
-    private Cidade cidade;
+	private Cidade cidade;
 
 }

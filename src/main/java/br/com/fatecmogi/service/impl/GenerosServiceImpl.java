@@ -11,11 +11,12 @@ import java.util.List;
 @ApplicationScoped
 public class GenerosServiceImpl implements GenerosService {
 
-    @Inject
-    GeneroRepository generoRepository;
+	@Inject
+	GeneroRepository generoRepository;
 
-    @Override
-    public List<Genero> findAll() {
-        return generoRepository.findAll();
-    }
+	@Override
+	public List<Genero> findAll() {
+		return generoRepository.findAll();
+	}
+
 }

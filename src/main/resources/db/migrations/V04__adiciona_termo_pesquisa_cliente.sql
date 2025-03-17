@@ -1,0 +1,1 @@
+ALTER TABLE clientes ADD clt_termo_pesquisa TEXT;

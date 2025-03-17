@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface TiposResidenciaService {
 
-    List<TipoResidencia> findAll();
+	List<TipoResidencia> findAll();
 
 }

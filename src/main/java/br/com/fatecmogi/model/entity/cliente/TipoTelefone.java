@@ -13,8 +13,8 @@ import lombok.experimental.SuperBuilder;
 @RegisterForReflection
 public class TipoTelefone {
 
-    private Long id;
+	private Long id;
 
-    private String nome;
+	private String nome;
 
 }

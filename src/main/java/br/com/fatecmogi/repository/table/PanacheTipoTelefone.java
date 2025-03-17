@@ -11,12 +11,12 @@ import lombok.Setter;
 @Setter
 public class PanacheTipoTelefone extends PanacheEntityBase {
 
-    @Id
-    @Column(name = "tpf_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	@Column(name = "tpf_id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @Column(name = "tpf_nome")
-    private String nome;
+	@Column(name = "tpf_nome")
+	private String nome;
 
 }

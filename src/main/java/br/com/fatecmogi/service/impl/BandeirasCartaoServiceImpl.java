@@ -11,12 +11,12 @@ import java.util.List;
 @ApplicationScoped
 public class BandeirasCartaoServiceImpl implements BandeirasCartaoService {
 
-    @Inject
-    BandeiraCartaoRepository bandeiraCartaoRepository;
+	@Inject
+	BandeiraCartaoRepository bandeiraCartaoRepository;
 
-    @Override
-    public List<BandeiraCartao> findAll() {
-        return bandeiraCartaoRepository.findAll();
-    }
+	@Override
+	public List<BandeiraCartao> findAll() {
+		return bandeiraCartaoRepository.findAll();
+	}
 
 }

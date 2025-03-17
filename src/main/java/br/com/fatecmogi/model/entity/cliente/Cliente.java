@@ -21,31 +21,38 @@ import java.util.List;
 @RegisterForReflection
 public class Cliente {
 
-    private Long id;
+	private Long id;
 
-    private Genero genero;
+	private String termoPesquisa;
 
-    private String nome;
+	private Genero genero;
 
-    private LocalDate dataNascimento;
+	private String nome;
 
-    private String cpf;
+	private LocalDate dataNascimento;
 
-    private String email;
+	private String cpf;
 
-    private String senha;
+	private String email;
 
-    private Telefone telefone;
+	private String senha;
 
-    @Builder.Default
-    private boolean ativo = true;
+	private Telefone telefone;
 
-    private List<EnderecoResidencial> enderecoResidencial;
+	@Builder.Default
+	private boolean ativo = true;
 
-    private List<EnderecoCobranca> enderecoCobranca;
+	private List<EnderecoResidencial> enderecoResidencial;
 
-    private List<EnderecoEntrega> enderecoEntrega;
+	private List<EnderecoCobranca> enderecoCobranca;
 
-    private List<CartaoCredito> cartaoCredito;
+	private List<EnderecoEntrega> enderecoEntrega;
+
+	private List<CartaoCredito> cartaoCredito;
+
+	public void gerarTermoPesquisa() {
+		this.termoPesquisa = this.nome + this.cpf + this.email + this.telefone + this.dataNascimento.toString()
+				+ this.genero.toString();
+	}
 
 }

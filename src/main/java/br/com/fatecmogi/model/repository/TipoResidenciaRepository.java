@@ -7,8 +7,8 @@ import java.util.Optional;
 
 public interface TipoResidenciaRepository {
 
-    List<TipoResidencia> findAll();
+	List<TipoResidencia> findAll();
 
-    Optional<TipoResidencia> findById(Long id);
+	Optional<TipoResidencia> findById(Long id);
 
 }

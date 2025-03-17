@@ -6,12 +6,12 @@ import br.com.fatecmogi.model.entity.cartaoCredito.CartaoCredito;
 
 public interface CartaoCreditoService {
 
-    CartaoCredito salvar(CadastrarCartaoCreditoClienteCommand command);
+	CartaoCredito salvar(CadastrarCartaoCreditoClienteCommand command);
 
-    CartaoCredito atualizar(Long id, EditarCartaoCreditoClienteCommand command);
+	CartaoCredito atualizar(Long id, EditarCartaoCreditoClienteCommand command);
 
-    void deletar(Long id);
+	void deletar(Long id);
 
-    void tornarPrincipal(Long id, Long clienteId);
+	void tornarPrincipal(Long id, Long clienteId);
 
 }

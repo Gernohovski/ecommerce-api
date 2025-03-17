@@ -8,14 +8,14 @@ import java.util.Optional;
 
 public interface EnderecoRepository {
 
-    Endereco save(Endereco endereco);
+	Endereco save(Endereco endereco);
 
-    Endereco update(Endereco endereco);
+	Endereco update(Endereco endereco);
 
-    void delete(Long id, TipoEndereco tipoEndereco);
+	void delete(Long id, TipoEndereco tipoEndereco);
 
-    Optional<Endereco> findById(Long id, TipoEndereco tipoEndereco);
+	Optional<Endereco> findById(Long id, TipoEndereco tipoEndereco);
 
-    List<Endereco> findAllByCliente(Long clienteId, TipoEndereco tipoEndereco);
+	List<Endereco> findAllByCliente(Long clienteId, TipoEndereco tipoEndereco);
 
 }

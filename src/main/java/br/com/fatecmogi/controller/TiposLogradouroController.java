@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/v1/tiposLogradouro")
 public class TiposLogradouroController {
 
-    @Inject
-    TiposLogradouroService tiposLogradouroService;
+	@Inject
+	TiposLogradouroService tiposLogradouroService;
 
-    @GetMapping
-    public Response listar() {
-        var tiposLogradouro = tiposLogradouroService.findAll();
-        return Response.status(Response.Status.OK).entity(tiposLogradouro).build();
-    }
+	@GetMapping
+	public Response listar() {
+		var tiposLogradouro = tiposLogradouroService.findAll();
+		return Response.status(Response.Status.OK).entity(tiposLogradouro).build();
+	}
 
 }

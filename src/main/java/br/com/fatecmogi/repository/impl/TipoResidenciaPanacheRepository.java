@@ -13,21 +13,22 @@ import java.util.Optional;
 @ApplicationScoped
 public class TipoResidenciaPanacheRepository implements TipoResidenciaRepository {
 
-    @Inject
-    PanacheTipoResidenciaMapper panacheTipoResidenciaMapper;
+	@Inject
+	PanacheTipoResidenciaMapper panacheTipoResidenciaMapper;
 
-    @Override
-    public List<TipoResidencia> findAll() {
-        List<PanacheTipoResidencia> panacheTipoResidencia = PanacheTipoResidencia.findAll().list();
-        return panacheTipoResidenciaMapper.from(panacheTipoResidencia);
-    }
+	@Override
+	public List<TipoResidencia> findAll() {
+		List<PanacheTipoResidencia> panacheTipoResidencia = PanacheTipoResidencia.findAll().list();
+		return panacheTipoResidenciaMapper.from(panacheTipoResidencia);
+	}
 
-    @Override
-    public Optional<TipoResidencia> findById(Long id) {
-        PanacheTipoResidencia panacheTipoResidencia = PanacheTipoResidencia.findById(id);
-        if (panacheTipoResidencia == null) {
-            return Optional.empty();
-        }
-        return Optional.of(panacheTipoResidenciaMapper.from(panacheTipoResidencia));
-    }
+	@Override
+	public Optional<TipoResidencia> findById(Long id) {
+		PanacheTipoResidencia panacheTipoResidencia = PanacheTipoResidencia.findById(id);
+		if (panacheTipoResidencia == null) {
+			return Optional.empty();
+		}
+		return Optional.of(panacheTipoResidenciaMapper.from(panacheTipoResidencia));
+	}
+
 }

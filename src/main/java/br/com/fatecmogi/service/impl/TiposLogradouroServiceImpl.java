@@ -11,11 +11,12 @@ import java.util.List;
 @ApplicationScoped
 public class TiposLogradouroServiceImpl implements TiposLogradouroService {
 
-    @Inject
-    TipoLogradouroRepository tipoLogradouroRepository;
+	@Inject
+	TipoLogradouroRepository tipoLogradouroRepository;
 
-    @Override
-    public List<TipoLogradouro> findAll() {
-        return tipoLogradouroRepository.findAll();
-    }
+	@Override
+	public List<TipoLogradouro> findAll() {
+		return tipoLogradouroRepository.findAll();
+	}
+
 }

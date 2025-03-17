@@ -15,19 +15,19 @@ import lombok.experimental.SuperBuilder;
 @RegisterForReflection
 public class CartaoCredito {
 
-    private Long id;
+	private Long id;
 
-    private String numero;
+	private String numero;
 
-    private String nomeImpresso;
+	private String nomeImpresso;
 
-    private BandeiraCartao bandeira;
+	private BandeiraCartao bandeira;
 
-    private String codigoSeguranca;
+	private String codigoSeguranca;
 
-    @Builder.Default
-    private boolean principal = false;
+	@Builder.Default
+	private boolean principal = false;
 
-    private Cliente cliente;
+	private Cliente cliente;
 
 }

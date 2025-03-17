@@ -4,7 +4,8 @@ import br.com.fatecmogi.controller.exceptionHandler.APIException;
 
 public class ClienteNaoEncontratoException extends APIException {
 
-    public ClienteNaoEncontratoException() {
-        super("Cliente não encontrado.", 404);
-    }
+	public ClienteNaoEncontratoException() {
+		super("Cliente não encontrado.", 404);
+	}
+
 }

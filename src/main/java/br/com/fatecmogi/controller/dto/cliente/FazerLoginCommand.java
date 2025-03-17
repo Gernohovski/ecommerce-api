@@ -12,10 +12,10 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 public class FazerLoginCommand {
 
-    @NotBlank(message = "E-mail é obrigatório")
-    private String email;
+	@NotBlank(message = "E-mail é obrigatório")
+	private String email;
 
-    @NotBlank(message = "Senha é obrigatória")
-    private String senha;
+	@NotBlank(message = "Senha é obrigatória")
+	private String senha;
 
 }

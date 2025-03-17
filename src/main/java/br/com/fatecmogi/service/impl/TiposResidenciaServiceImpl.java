@@ -11,12 +11,12 @@ import java.util.List;
 @ApplicationScoped
 public class TiposResidenciaServiceImpl implements TiposResidenciaService {
 
-    @Inject
-    TipoResidenciaRepository tipoResidenciaRepository;
+	@Inject
+	TipoResidenciaRepository tipoResidenciaRepository;
 
-    @Override
-    public List<TipoResidencia> findAll() {
-        return tipoResidenciaRepository.findAll();
-    }
+	@Override
+	public List<TipoResidencia> findAll() {
+		return tipoResidenciaRepository.findAll();
+	}
 
 }

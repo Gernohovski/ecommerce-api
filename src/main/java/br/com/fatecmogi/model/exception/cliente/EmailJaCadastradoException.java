@@ -4,8 +4,8 @@ import br.com.fatecmogi.controller.exceptionHandler.APIException;
 
 public class EmailJaCadastradoException extends APIException {
 
-    public EmailJaCadastradoException() {
-        super("E-mail já cadastrado no site.", 404);
-    }
+	public EmailJaCadastradoException() {
+		super("E-mail já cadastrado no site.", 404);
+	}
 
 }

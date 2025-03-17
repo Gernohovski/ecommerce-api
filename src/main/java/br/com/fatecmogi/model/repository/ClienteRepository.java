@@ -7,22 +7,22 @@ import java.util.Optional;
 
 public interface ClienteRepository {
 
-    Cliente save(Cliente cliente);
+	Cliente save(Cliente cliente);
 
-    List<Cliente> findAll();
+	List<Cliente> findAll();
 
-    List<Cliente> findAllByExample(Cliente cliente);
+	List<Cliente> findAllByExample(Cliente cliente);
 
-    boolean existsByCpf(String cpf);
+	boolean existsByCpf(String cpf);
 
-    boolean existsByEmail(String email);
+	boolean existsByEmail(String email);
 
-    Optional<Cliente> findById(Long id);
+	Optional<Cliente> findById(Long id);
 
-    Cliente update(Cliente cliente);
+	Cliente update(Cliente cliente);
 
-    void delete(Cliente cliente);
+	void delete(Cliente cliente);
 
-    Optional<Cliente> findByEmail(String email);
+	Optional<Cliente> findByEmail(String email);
 
 }

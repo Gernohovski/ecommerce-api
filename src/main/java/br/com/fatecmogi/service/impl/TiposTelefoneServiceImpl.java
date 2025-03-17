@@ -11,12 +11,12 @@ import java.util.List;
 @ApplicationScoped
 public class TiposTelefoneServiceImpl implements TiposTelefoneService {
 
-    @Inject
-    TipoTelefoneRepository tipoTelefoneRepository;
+	@Inject
+	TipoTelefoneRepository tipoTelefoneRepository;
 
-    @Override
-    public List<TipoTelefone> findAll() {
-        return tipoTelefoneRepository.findAll();
-    }
+	@Override
+	public List<TipoTelefone> findAll() {
+		return tipoTelefoneRepository.findAll();
+	}
 
 }

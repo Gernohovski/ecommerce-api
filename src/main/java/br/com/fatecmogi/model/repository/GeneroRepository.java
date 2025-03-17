@@ -7,8 +7,8 @@ import java.util.Optional;
 
 public interface GeneroRepository {
 
-    List<Genero> findAll();
+	List<Genero> findAll();
 
-    Optional<Genero> findById(Long id);
+	Optional<Genero> findById(Long id);
 
 }

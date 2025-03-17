@@ -4,8 +4,8 @@ import br.com.fatecmogi.controller.exceptionHandler.APIException;
 
 public class GeneroNaoEncontradoException extends APIException {
 
-    public GeneroNaoEncontradoException() {
-        super("Genêro não encontrado", 404);
-    }
+	public GeneroNaoEncontradoException() {
+		super("Genêro não encontrado", 404);
+	}
 
 }

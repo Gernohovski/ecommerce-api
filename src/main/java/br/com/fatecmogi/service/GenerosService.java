@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface GenerosService {
 
-    List<Genero> findAll();
+	List<Genero> findAll();
 
 }

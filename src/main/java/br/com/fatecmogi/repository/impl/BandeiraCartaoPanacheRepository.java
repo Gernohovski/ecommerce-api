@@ -13,22 +13,22 @@ import java.util.Optional;
 @ApplicationScoped
 public class BandeiraCartaoPanacheRepository implements BandeiraCartaoRepository {
 
-    @Inject
-    PanacheBandeiraCartaoMapper panacheBandeiraCartaoMapper;
+	@Inject
+	PanacheBandeiraCartaoMapper panacheBandeiraCartaoMapper;
 
-    @Override
-    public List<BandeiraCartao> findAll() {
-        List<PanacheBandeiraCartao> panacheBandeiraCartao = PanacheBandeiraCartao.findAll().list();
-        return panacheBandeiraCartaoMapper.from(panacheBandeiraCartao);
-    }
+	@Override
+	public List<BandeiraCartao> findAll() {
+		List<PanacheBandeiraCartao> panacheBandeiraCartao = PanacheBandeiraCartao.findAll().list();
+		return panacheBandeiraCartaoMapper.from(panacheBandeiraCartao);
+	}
 
-    @Override
-    public Optional<BandeiraCartao> findById(Long id) {
-        PanacheBandeiraCartao panacheBandeiraCartao = PanacheBandeiraCartao.findById(id);
-        if (panacheBandeiraCartao == null) {
-            return Optional.empty();
-        }
-        return Optional.of(panacheBandeiraCartaoMapper.from(panacheBandeiraCartao));
-    }
+	@Override
+	public Optional<BandeiraCartao> findById(Long id) {
+		PanacheBandeiraCartao panacheBandeiraCartao = PanacheBandeiraCartao.findById(id);
+		if (panacheBandeiraCartao == null) {
+			return Optional.empty();
+		}
+		return Optional.of(panacheBandeiraCartaoMapper.from(panacheBandeiraCartao));
+	}
 
 }

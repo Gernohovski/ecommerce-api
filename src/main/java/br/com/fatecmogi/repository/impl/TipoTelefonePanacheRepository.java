@@ -13,22 +13,22 @@ import java.util.Optional;
 @ApplicationScoped
 public class TipoTelefonePanacheRepository implements TipoTelefoneRepository {
 
-    @Inject
-    PanacheTipoTelefoneMapper panacheTipoTelefoneMapper;
+	@Inject
+	PanacheTipoTelefoneMapper panacheTipoTelefoneMapper;
 
-    @Override
-    public List<TipoTelefone> findAll() {
-        List<PanacheTipoTelefone> panacheTipoTelefone = PanacheTipoTelefone.findAll().list();
-        return panacheTipoTelefoneMapper.from(panacheTipoTelefone);
-    }
+	@Override
+	public List<TipoTelefone> findAll() {
+		List<PanacheTipoTelefone> panacheTipoTelefone = PanacheTipoTelefone.findAll().list();
+		return panacheTipoTelefoneMapper.from(panacheTipoTelefone);
+	}
 
-    @Override
-    public Optional<TipoTelefone> findById(Long id) {
-        PanacheTipoTelefone panacheTipoTelefone = PanacheTipoTelefone.findById(id);
-        if (panacheTipoTelefone == null) {
-            return Optional.empty();
-        }
-        return Optional.of(panacheTipoTelefoneMapper.from(panacheTipoTelefone));
-    }
+	@Override
+	public Optional<TipoTelefone> findById(Long id) {
+		PanacheTipoTelefone panacheTipoTelefone = PanacheTipoTelefone.findById(id);
+		if (panacheTipoTelefone == null) {
+			return Optional.empty();
+		}
+		return Optional.of(panacheTipoTelefoneMapper.from(panacheTipoTelefone));
+	}
 
 }

@@ -7,8 +7,8 @@ import java.util.Optional;
 
 public interface TipoTelefoneRepository {
 
-    List<TipoTelefone> findAll();
+	List<TipoTelefone> findAll();
 
-    Optional<TipoTelefone> findById(Long id);
+	Optional<TipoTelefone> findById(Long id);
 
 }

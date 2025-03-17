@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface BandeirasCartaoService {
 
-    List<BandeiraCartao> findAll();
+	List<BandeiraCartao> findAll();
 
 }
