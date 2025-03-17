@@ -10,10 +10,7 @@ import br.com.fatecmogi.model.entity.endereco.EnderecoEntrega;
 import br.com.fatecmogi.model.entity.endereco.EnderecoResidencial;
 import br.com.fatecmogi.model.enums.TipoEndereco;
 import br.com.fatecmogi.model.exception.cliente.ClienteNaoEncontratoException;
-import br.com.fatecmogi.model.exception.endereco.EnderecoClienteDiferenteException;
-import br.com.fatecmogi.model.exception.endereco.TipoEnderecoNaoEncontratoException;
-import br.com.fatecmogi.model.exception.endereco.TipoLogradouroNaoEncontratoException;
-import br.com.fatecmogi.model.exception.endereco.TipoResidenciaNaoEncontratoException;
+import br.com.fatecmogi.model.exception.endereco.*;
 import br.com.fatecmogi.model.repository.ClienteRepository;
 import br.com.fatecmogi.model.repository.EnderecoRepository;
 import br.com.fatecmogi.model.repository.TipoLogradouroRepository;
@@ -115,6 +112,27 @@ public class EnderecoServiceImpl implements EnderecoService {
             throw new TipoEnderecoNaoEncontratoException();
         }
         enderecoRepository.delete(id, tipoEndereco);
+    }
+
+    @Override
+    @Transactional
+    public void tornarPrincipal(Long id, String tipo, Long clienteId) {
+        TipoEndereco tipoEndereco;
+        try {
+            tipoEndereco = TipoEndereco.valueOf(tipo);
+        } catch (Exception e) {
+            throw new TipoEnderecoNaoEncontratoException();
+        }
+        var endereco = enderecoRepository.findById(id, tipoEndereco).orElseThrow(EnderecoNaoEncontradoException::new);
+        var enderecosCliente = enderecoRepository.findAllByCliente(clienteId, tipoEndereco);
+        enderecosCliente.forEach(enderecoCliente -> {
+            if(!Objects.equals(enderecoCliente.getId(), id)){
+                enderecoCliente.setPrincipal(false);
+                enderecoRepository.update(enderecoCliente);
+            }
+        });
+        endereco.setPrincipal(true);
+        enderecoRepository.update(endereco);
     }
 
 }

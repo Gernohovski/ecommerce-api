@@ -5,7 +5,7 @@ import br.com.fatecmogi.controller.exceptionHandler.APIException;
 public class CpfJaCadastradoException extends APIException {
 
     public CpfJaCadastradoException() {
-        super("CPF já cadastrado", 404);
+        super("CPF já cadastrado no site.", 404);
     }
 
 }

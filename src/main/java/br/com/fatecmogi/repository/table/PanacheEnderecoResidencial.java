@@ -52,6 +52,9 @@ public class PanacheEnderecoResidencial extends PanacheEntityBase {
     @Column(name = "ers_frase_identificacao")
     private String fraseIdentificacao;
 
+    @Column(name = "ers_principal")
+    private boolean principal;
+
     @ManyToOne
     @JoinColumn(name = "ers_clt_id", referencedColumnName = "clt_id")
     private PanacheCliente cliente;

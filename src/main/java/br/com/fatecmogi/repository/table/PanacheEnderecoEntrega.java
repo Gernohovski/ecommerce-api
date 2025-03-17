@@ -2,6 +2,7 @@ package br.com.fatecmogi.repository.table;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -50,6 +51,9 @@ public class PanacheEnderecoEntrega extends PanacheEntityBase {
 
     @Column(name = "eet_frase_identificacao")
     private String fraseIdentificacao;
+
+    @Column(name = "eet_principal")
+    private boolean principal;
 
     @ManyToOne
     @JoinColumn(name = "eet_clt_id", referencedColumnName = "clt_id")

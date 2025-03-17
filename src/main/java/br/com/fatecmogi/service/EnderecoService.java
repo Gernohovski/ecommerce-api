@@ -12,4 +12,6 @@ public interface EnderecoService {
 
     void deletar(Long id, String tipoEndereco);
 
+    void tornarPrincipal(Long id, String tipoEndereco, Long clienteId);
+
 }

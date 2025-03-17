@@ -9,6 +9,7 @@ import br.com.fatecmogi.model.exception.cartaoCredito.BandeiraCartaoNaoEncontrat
 import br.com.fatecmogi.model.exception.cartaoCredito.CartaoCreditoClienteDiferenteException;
 import br.com.fatecmogi.model.exception.cartaoCredito.CartaoCreditoNaoEncontratoException;
 import br.com.fatecmogi.model.exception.cliente.ClienteNaoEncontratoException;
+import br.com.fatecmogi.model.exception.endereco.EnderecoNaoEncontradoException;
 import br.com.fatecmogi.model.repository.BandeiraCartaoRepository;
 import br.com.fatecmogi.model.repository.CartaoCreditoRepository;
 import br.com.fatecmogi.model.repository.ClienteRepository;
@@ -65,5 +66,18 @@ public class CartaoCreditoServiceImpl implements CartaoCreditoService {
     public void deletar(Long id) {
         cartaoCreditoRepository.findById(id).orElseThrow(CartaoCreditoNaoEncontratoException::new);
         cartaoCreditoRepository.delete(id);
+    }
+
+    @Override
+    @Transactional
+    public void tornarPrincipal(Long id, Long clienteId) {
+        var cartao = cartaoCreditoRepository.findById(id).orElseThrow(CartaoCreditoNaoEncontratoException::new);
+        var cartoesCliente = cartaoCreditoRepository.findAllByCliente(clienteId);
+        cartoesCliente.forEach(cartaoCliente -> {
+            cartaoCliente.setPrincipal(false);
+            cartaoCreditoRepository.update(cartaoCliente);
+        });
+        cartao.setPrincipal(true);
+        cartaoCreditoRepository.update(cartao);
     }
 }

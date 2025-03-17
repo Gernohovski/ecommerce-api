@@ -32,4 +32,10 @@ public class EnderecoController {
         return Response.status(Response.Status.NO_CONTENT).build();
     }
 
+    @PutMapping("/{id}/{clienteId}/{tipoEndereco}")
+    public Response tornarPrincipal(@PathVariable("id") Long id, @PathVariable("clienteId") Long clienteId, @PathVariable("tipoEndereco") String tipoEndereco) {
+        enderecoService.tornarPrincipal(id, tipoEndereco, clienteId);
+        return Response.status(Response.Status.NO_CONTENT).build();
+    }
+
 }

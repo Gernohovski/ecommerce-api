@@ -31,6 +31,9 @@ public class Endereco {
 
     private String fraseIdentificacao;
 
+    @Builder.Default
+    private boolean principal = false;
+
     private Cliente cliente;
 
 }

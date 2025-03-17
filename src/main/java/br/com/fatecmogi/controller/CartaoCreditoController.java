@@ -37,4 +37,10 @@ public class CartaoCreditoController {
         return Response.status(Response.Status.NO_CONTENT).build();
     }
 
+    @PutMapping("/{id}/{clienteId}")
+    public Response tornarPrincipal(@PathVariable("id") Long id, @PathVariable("clienteId") Long clienteId) {
+        cartaoCreditoService.tornarPrincipal(id, clienteId);
+        return Response.status(Response.Status.NO_CONTENT).build();
+    }
+
 }

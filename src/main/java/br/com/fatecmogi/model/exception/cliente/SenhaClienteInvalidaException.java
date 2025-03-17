@@ -5,7 +5,7 @@ import br.com.fatecmogi.controller.exceptionHandler.APIException;
 public class SenhaClienteInvalidaException extends APIException {
 
     public SenhaClienteInvalidaException() {
-        super("Senha inválida", 400);
+        super("Senha inválida.", 400);
     }
 
 }

@@ -12,4 +12,6 @@ public interface CartaoCreditoService {
 
     void deletar(Long id);
 
+    void tornarPrincipal(Long id, Long clienteId);
+
 }

@@ -29,10 +29,22 @@ public class ClientePanacheRepository implements ClienteRepository {
     @Override
     public Cliente save(Cliente cliente) {
         PanacheCliente panacheCliente = panacheClienteMapper.from(cliente);
-        panacheCliente.getEnderecoResidencial().forEach(endereco -> endereco.setCliente(panacheCliente));
-        panacheCliente.getEnderecoCobranca().forEach(endereco -> endereco.setCliente(panacheCliente));
-        panacheCliente.getEnderecoEntrega().forEach(endereco -> endereco.setCliente(panacheCliente));
-        panacheCliente.getCartaoCredito().forEach(cartao -> cartao.setCliente(panacheCliente));
+        panacheCliente.getEnderecoResidencial().forEach(endereco -> {
+            endereco.setPrincipal(true);
+            endereco.setCliente(panacheCliente);
+        });
+        panacheCliente.getEnderecoCobranca().forEach(endereco -> {
+            endereco.setPrincipal(true);
+            endereco.setCliente(panacheCliente);
+        });
+        panacheCliente.getEnderecoEntrega().forEach(endereco -> {
+            endereco.setPrincipal(true);
+            endereco.setCliente(panacheCliente);
+        });
+        panacheCliente.getCartaoCredito().forEach(cartao -> {
+            cartao.setPrincipal(true);
+            cartao.setCliente(panacheCliente);
+        });
         panacheCliente.persistDependecies();
         panacheCliente.persist();
         return panacheClienteMapper.from(panacheCliente);

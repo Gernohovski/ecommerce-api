@@ -5,9 +5,11 @@ import br.com.fatecmogi.model.repository.CartaoCreditoRepository;
 import br.com.fatecmogi.repository.mapper.PanacheCartaoCreditoMapper;
 import br.com.fatecmogi.repository.table.PanacheCartaoCredito;
 import br.com.fatecmogi.repository.table.PanacheCliente;
+import br.com.fatecmogi.repository.table.PanacheEnderecoResidencial;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
+import java.util.List;
 import java.util.Optional;
 
 @ApplicationScoped
@@ -45,6 +47,12 @@ public class CartaoCreditoPanacheRepository implements CartaoCreditoRepository {
     @Override
     public void delete(Long id) {
         PanacheCartaoCredito.delete("id", id);
+    }
+
+    @Override
+    public List<CartaoCredito> findAllByCliente(Long clienteId) {
+        List<PanacheCartaoCredito> cartoesCredito = PanacheCartaoCredito.find("cliente.id", clienteId).list();
+        return panacheCartaoCreditoMapper.from(cartoesCredito);
     }
 
 }

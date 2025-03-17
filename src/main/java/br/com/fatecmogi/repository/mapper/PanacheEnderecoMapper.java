@@ -6,6 +6,8 @@ import br.com.fatecmogi.repository.table.PanacheEnderecoEntrega;
 import br.com.fatecmogi.repository.table.PanacheEnderecoResidencial;
 import org.mapstruct.*;
 
+import java.util.List;
+
 @Mapper(componentModel = "cdi", uses = PanacheClienteMapper.class)
 public interface PanacheEnderecoMapper {
 
@@ -15,6 +17,27 @@ public interface PanacheEnderecoMapper {
     @Mapping(target = "pais", source = "bairro.cidade.estado.pais.nome")
     @Mapping(target = "cliente", ignore = true)
     PanacheEnderecoResidencial fromEnderecoResidencial(EnderecoResidencial endereco);
+
+    @Mapping(target = "bairro.nome", source = "bairro")
+    @Mapping(target = "bairro.cidade.nome", source = "cidade")
+    @Mapping(target = "bairro.cidade.estado.nome", source = "estado")
+    @Mapping(target = "bairro.cidade.estado.pais.nome", source = "pais")
+    @Mapping(target = "cliente", ignore = true)
+    List<Endereco> fromEnderecoResidencial(List<PanacheEnderecoResidencial> panacheEnderecoResidencialList);
+
+    @Mapping(target = "bairro.nome", source = "bairro")
+    @Mapping(target = "bairro.cidade.nome", source = "cidade")
+    @Mapping(target = "bairro.cidade.estado.nome", source = "estado")
+    @Mapping(target = "bairro.cidade.estado.pais.nome", source = "pais")
+    @Mapping(target = "cliente", ignore = true)
+    List<Endereco> fromEnderecoCobranca(List<PanacheEnderecoCobranca> panacheEnderecoCobrancaList);
+
+    @Mapping(target = "bairro.nome", source = "bairro")
+    @Mapping(target = "bairro.cidade.nome", source = "cidade")
+    @Mapping(target = "bairro.cidade.estado.nome", source = "estado")
+    @Mapping(target = "bairro.cidade.estado.pais.nome", source = "pais")
+    @Mapping(target = "cliente", ignore = true)
+    List<Endereco> fromEnderecoEntrega(List<PanacheEnderecoEntrega> panacheEnderecoEntregaList);
 
     @Mapping(target = "bairro", source = "bairro.nome")
     @Mapping(target = "cidade", source = "bairro.cidade.nome")

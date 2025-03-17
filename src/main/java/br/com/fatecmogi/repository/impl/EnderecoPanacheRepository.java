@@ -16,6 +16,8 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @ApplicationScoped
@@ -63,6 +65,7 @@ public class EnderecoPanacheRepository implements EnderecoRepository {
             PanacheEnderecoEntrega panacheEnderecoEntregaSalvo = PanacheEnderecoEntrega.findById(endereco.getId());
             panacheEnderecoEntregaSalvo.unreferrenceDependecies();
             PanacheEnderecoEntrega panacheEnderecoEntrega = panacheEnderecoMapper.updateEnderecoEntrega(panacheEnderecoEntregaSalvo, endereco);
+            panacheEnderecoEntrega.persist();
             return panacheEnderecoMapper.from(panacheEnderecoEntrega);
         }
     }
@@ -88,6 +91,26 @@ public class EnderecoPanacheRepository implements EnderecoRepository {
             return Optional.empty();
         }
         return Optional.of(endereco);
+    }
+
+    @Override
+    public List<Endereco> findAllByCliente(Long clienteId, TipoEndereco tipoEndereco) {
+        List<Endereco> enderecos = new ArrayList<>();
+        switch (tipoEndereco) {
+            case RESIDENCIAL -> {
+                List<PanacheEnderecoResidencial> enderecosResidenciais = PanacheEnderecoResidencial.find("cliente.id", clienteId).list();
+                enderecos = panacheEnderecoMapper.fromEnderecoResidencial(enderecosResidenciais);
+            }
+            case COBRANCA -> {
+                List<PanacheEnderecoCobranca> enderecoCobrancas = PanacheEnderecoCobranca.find("cliente.id", clienteId).list();
+                enderecos = panacheEnderecoMapper.fromEnderecoCobranca(enderecoCobrancas);
+            }
+            case ENTREGA -> {
+                List<PanacheEnderecoEntrega> enderecoEntregas = PanacheEnderecoEntrega.find("cliente.id", clienteId).list();
+                enderecos = panacheEnderecoMapper.fromEnderecoEntrega(enderecoEntregas);
+            }
+        }
+        return enderecos;
     }
 
 }

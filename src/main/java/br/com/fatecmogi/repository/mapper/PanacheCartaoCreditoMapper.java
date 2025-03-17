@@ -8,6 +8,8 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.MappingTarget;
 
+import java.util.List;
+
 @Mapper(componentModel = "cdi", uses = {PanacheBandeiraCartaoMapper.class, EnderecoMapper.class, PanacheClienteMapper.class})
 public interface PanacheCartaoCreditoMapper {
 
@@ -19,4 +21,7 @@ public interface PanacheCartaoCreditoMapper {
 
     @Mapping(target = "cliente", ignore = true)
     PanacheCartaoCredito update(@MappingTarget PanacheCartaoCredito panacheCartaoCredito, CartaoCredito cartaoCredito);
+
+    @Mapping(target = "cliente", ignore = true)
+    List<CartaoCredito> from(List<PanacheCartaoCredito> panacheCartaoCreditos);
 }

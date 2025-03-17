@@ -1,16 +1,16 @@
 package br.com.fatecmogi.controller.exceptionHandler;
 
 import jakarta.validation.ConstraintViolation;
+import lombok.Getter;
 
-import java.util.Set;
-import java.util.stream.Collectors;
-
+@Getter
 public class ValidationException extends RuntimeException {
-  public ValidationException(Set<? extends ConstraintViolation<?>> violations) {
+  private final int statusCode;
+  private final String message;
 
-    super(violations.stream()
-            .map(violation -> violation.getPropertyPath() + " " + violation.getMessage())
-            .collect(Collectors.joining(", ")));
+  public ValidationException(ConstraintViolation<?> violation) {
+    super(violation.getMessage());
+    this.statusCode = 400;
+    this.message = violation.getMessage();
   }
-
 }

@@ -51,6 +51,9 @@ public class PanacheEnderecoCobranca extends PanacheEntityBase {
     @Column(name = "ecb_frase_identificacao")
     private String fraseIdentificacao;
 
+    @Column(name = "ecb_principal")
+    private boolean principal;
+
     @ManyToOne
     @JoinColumn(name = "ecb_clt_id", referencedColumnName = "clt_id")
     private PanacheCliente cliente;

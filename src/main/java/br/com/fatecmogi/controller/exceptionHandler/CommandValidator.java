@@ -16,8 +16,8 @@ public class CommandValidator {
     public <T> void validate(T command) {
         Set<ConstraintViolation<T>> violations = validator.validate(command);
         if (!violations.isEmpty()) {
-            throw new ValidationException(violations);
+            throw new ValidationException(violations.iterator().next());
         }
     }
-
 }
+

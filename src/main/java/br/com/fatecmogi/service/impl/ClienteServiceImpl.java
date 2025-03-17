@@ -65,7 +65,6 @@ public class ClienteServiceImpl implements ClienteService {
         var genero = generoRepository.findById(command.getGeneroId()).orElseThrow(GeneroNaoEncontradoException::new);
         var clienteAtualizado = clienteMapper.update(cliente, command);
         clienteAtualizado.setGenero(genero);
-        clienteAtualizado.setSenha(senhaService.encriptarSenha(clienteAtualizado.getSenha()));
         return clienteRepository.update(clienteAtualizado);
     }
 

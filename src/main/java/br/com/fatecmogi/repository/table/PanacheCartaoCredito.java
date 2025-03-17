@@ -29,6 +29,9 @@ public class PanacheCartaoCredito extends PanacheEntityBase {
     @Column(name = "crc_codigo_segurança")
     private String codigoSeguranca;
 
+    @Column(name = "crc_principal")
+    private boolean principal;
+
     @ManyToOne
     @JoinColumn(name = "crc_clt_id", referencedColumnName = "clt_id")
     private PanacheCliente cliente;
