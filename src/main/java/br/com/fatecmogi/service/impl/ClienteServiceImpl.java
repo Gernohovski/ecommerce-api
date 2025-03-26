@@ -1,9 +1,6 @@
 package br.com.fatecmogi.service.impl;
 
-import br.com.fatecmogi.controller.dto.cliente.CadastrarClienteCommand;
-import br.com.fatecmogi.controller.dto.cliente.EditarClienteCommand;
-import br.com.fatecmogi.controller.dto.cliente.EditarSenhaClienteCommand;
-import br.com.fatecmogi.controller.dto.cliente.FazerLoginCommand;
+import br.com.fatecmogi.controller.dto.cliente.*;
 import br.com.fatecmogi.controller.exceptionHandler.CommandValidator;
 import br.com.fatecmogi.controller.mapper.ClienteMapper;
 import br.com.fatecmogi.model.entity.cliente.Cliente;
@@ -13,6 +10,7 @@ import br.com.fatecmogi.model.repository.ClienteRepository;
 import br.com.fatecmogi.model.repository.GeneroRepository;
 import br.com.fatecmogi.service.ClienteService;
 import br.com.fatecmogi.service.SenhaService;
+import br.com.fatecmogi.service.TermoPesquisaService;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -37,6 +35,9 @@ public class ClienteServiceImpl implements ClienteService {
 	@Inject
 	SenhaService senhaService;
 
+	@Inject
+	TermoPesquisaService termoPesquisaService;
+
 	@Override
 	@Transactional
 	public Cliente salvar(CadastrarClienteCommand command) {
@@ -51,6 +52,7 @@ public class ClienteServiceImpl implements ClienteService {
 		var cliente = clienteMapper.from(command);
 		cliente.setGenero(genero);
 		cliente.setSenha(senhaService.encriptarSenha(cliente.getSenha()));
+		cliente.setTermoPesquisa(termoPesquisaService.calcularTermoPesquisa(cliente.obterParametrosTermoPesquisa()));
 		return clienteRepository.save(cliente);
 	}
 
@@ -62,6 +64,7 @@ public class ClienteServiceImpl implements ClienteService {
 		var genero = generoRepository.findById(command.getGeneroId()).orElseThrow(GeneroNaoEncontradoException::new);
 		var clienteAtualizado = clienteMapper.update(cliente, command);
 		clienteAtualizado.setGenero(genero);
+		cliente.setTermoPesquisa(termoPesquisaService.calcularTermoPesquisa(cliente.obterParametrosTermoPesquisa()));
 		return clienteRepository.update(clienteAtualizado);
 	}
 
@@ -107,6 +110,11 @@ public class ClienteServiceImpl implements ClienteService {
 			.email(email)
 			.build();
 		return clienteRepository.findAllByExample(cliente);
+	}
+
+	@Override
+	public List<Cliente> filtrarPaginacao(FiltrarClienteCommand command) {
+		return clienteRepository.findAllWithPagination(command);
 	}
 
 	@Override

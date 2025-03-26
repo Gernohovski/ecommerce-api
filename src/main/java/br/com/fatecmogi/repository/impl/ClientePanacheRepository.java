@@ -1,5 +1,6 @@
 package br.com.fatecmogi.repository.impl;
 
+import br.com.fatecmogi.controller.dto.cliente.FiltrarClienteCommand;
 import br.com.fatecmogi.model.entity.cliente.Cliente;
 import br.com.fatecmogi.model.repository.ClienteRepository;
 import br.com.fatecmogi.repository.mapper.PanacheClienteMapper;
@@ -75,6 +76,18 @@ public class ClientePanacheRepository implements ClienteRepository {
 		}
 		List<PanacheCliente> panacheCliente = PanacheCliente.find(query.toString(), params).list();
 		return panacheClienteMapper.from(panacheCliente);
+	}
+
+	@Override
+	public List<Cliente> findAllWithPagination(FiltrarClienteCommand command) {
+		StringBuilder query = new StringBuilder("from PanacheCliente u where 1=1");
+		Map<String, Object> params = new HashMap<>();
+		if (command.getTermoPesquisa() != null) {
+			query.append(" and u.termoPesquisa ilike :termoPesquisa");
+			params.put("termoPesquisa", "%" + command.getTermoPesquisa() + "%");
+		}
+		List<PanacheCliente> panacheClientes = PanacheCliente.find(query.toString(), params).list();
+		return panacheClienteMapper.from(panacheClientes);
 	}
 
 	@Override

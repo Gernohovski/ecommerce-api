@@ -1,9 +1,6 @@
 package br.com.fatecmogi.service;
 
-import br.com.fatecmogi.controller.dto.cliente.CadastrarClienteCommand;
-import br.com.fatecmogi.controller.dto.cliente.EditarClienteCommand;
-import br.com.fatecmogi.controller.dto.cliente.EditarSenhaClienteCommand;
-import br.com.fatecmogi.controller.dto.cliente.FazerLoginCommand;
+import br.com.fatecmogi.controller.dto.cliente.*;
 import br.com.fatecmogi.model.entity.cliente.Cliente;
 
 import java.util.List;
@@ -23,6 +20,8 @@ public interface ClienteService {
 	Cliente buscar(Long id);
 
 	List<Cliente> filtrar(Long generoId, String nome, String cpf, String email);
+
+	List<Cliente> filtrarPaginacao(FiltrarClienteCommand command);
 
 	Cliente login(FazerLoginCommand command);
 

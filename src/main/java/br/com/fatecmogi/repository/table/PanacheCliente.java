@@ -26,6 +26,9 @@ public class PanacheCliente extends PanacheEntityBase {
 	@Column(name = "clt_nome")
 	private String nome;
 
+	@Column(name = "clt_termo_pesquisa")
+	private String termoPesquisa;
+
 	@Column(name = "clt_data_nascimento")
 	private LocalDate dataNascimento;
 

@@ -50,9 +50,9 @@ public class Cliente {
 
 	private List<CartaoCredito> cartaoCredito;
 
-	public void gerarTermoPesquisa() {
-		this.termoPesquisa = this.nome + this.cpf + this.email + this.telefone + this.dataNascimento.toString()
-				+ this.genero.toString();
+	public List<String> obterParametrosTermoPesquisa() {
+		return List.of(this.nome, this.cpf, this.email, this.telefone.getTelefone(), this.dataNascimento.toString(),
+				this.genero.getNome());
 	}
 
 }

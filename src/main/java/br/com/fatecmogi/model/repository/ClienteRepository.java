@@ -1,5 +1,6 @@
 package br.com.fatecmogi.model.repository;
 
+import br.com.fatecmogi.controller.dto.cliente.FiltrarClienteCommand;
 import br.com.fatecmogi.model.entity.cliente.Cliente;
 
 import java.util.List;
@@ -12,6 +13,8 @@ public interface ClienteRepository {
 	List<Cliente> findAll();
 
 	List<Cliente> findAllByExample(Cliente cliente);
+
+	List<Cliente> findAllWithPagination(FiltrarClienteCommand command);
 
 	boolean existsByCpf(String cpf);
 

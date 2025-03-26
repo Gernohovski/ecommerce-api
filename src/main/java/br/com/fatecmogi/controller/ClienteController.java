@@ -1,9 +1,6 @@
 package br.com.fatecmogi.controller;
 
-import br.com.fatecmogi.controller.dto.cliente.CadastrarClienteCommand;
-import br.com.fatecmogi.controller.dto.cliente.EditarClienteCommand;
-import br.com.fatecmogi.controller.dto.cliente.EditarSenhaClienteCommand;
-import br.com.fatecmogi.controller.dto.cliente.FazerLoginCommand;
+import br.com.fatecmogi.controller.dto.cliente.*;
 import br.com.fatecmogi.service.ClienteService;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.core.Response;
@@ -59,9 +56,10 @@ public class ClienteController {
 	}
 
 	@GetMapping
-	public Response filtrar(@RequestParam(required = false) Long generoId, @RequestParam(required = false) String nome,
-			@RequestParam(required = false) String cpf, @RequestParam(required = false) String email) {
-		var clientes = clienteService.filtrar(generoId, nome, cpf, email);
+	public Response filtrar(@RequestParam int size, @RequestParam int page,
+			@RequestParam(required = false) String termoPesquisa) {
+		var command = FiltrarClienteCommand.builder().size(size).page(page).termoPesquisa(termoPesquisa).build();
+		var clientes = clienteService.filtrarPaginacao(command);
 		return Response.status(Response.Status.OK).entity(clientes).build();
 	}
 
