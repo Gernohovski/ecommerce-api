@@ -16,6 +16,8 @@ import java.time.LocalDateTime;
 @RegisterForReflection
 public class RegistroStatus {
 
+	private Long id;
+
 	private Livro livro;
 
 	private String justificativa;

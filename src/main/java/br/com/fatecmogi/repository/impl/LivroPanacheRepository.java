@@ -5,7 +5,9 @@ import br.com.fatecmogi.controller.dto.paginacao.PaginacaoDTO;
 import br.com.fatecmogi.model.entity.livro.Livro;
 import br.com.fatecmogi.model.repository.LivroRepository;
 import br.com.fatecmogi.repository.mapper.PanacheLivroMapper;
+import br.com.fatecmogi.repository.table.PanacheCliente;
 import br.com.fatecmogi.repository.table.PanacheLivro;
+import br.com.fatecmogi.repository.table.PanacheTelefone;
 import br.com.fatecmogi.service.impl.RedisService;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -13,6 +15,7 @@ import jakarta.inject.Inject;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @ApplicationScoped
 public class LivroPanacheRepository implements LivroRepository {
@@ -33,6 +36,24 @@ public class LivroPanacheRepository implements LivroRepository {
 		List<Livro> livros = panacheLivroMapper.from(filtrarLivros(filtro, paginacao));
 		redisService.salvarLivrosNoCache(cacheKey, livros);
 		return livros;
+	}
+
+	@Override
+	public Livro update(Livro livro) {
+		PanacheLivro panacheLivro = PanacheLivro.findById(livro.getId());
+		panacheLivro.unreferenceDependecies();
+		panacheLivro = panacheLivroMapper.update(panacheLivro, livro);
+		panacheLivro.persist();
+		return panacheLivroMapper.from(panacheLivro);
+	}
+
+	@Override
+	public Optional<Livro> findById(Long id) {
+		PanacheLivro panacheLivro = PanacheLivro.findById(id);
+		if(panacheLivro == null) {
+			return Optional.empty();
+		}
+		return Optional.of(panacheLivroMapper.from(panacheLivro));
 	}
 
 	public List<PanacheLivro> filtrarLivros(LivroFiltroDTO filtro, PaginacaoDTO paginacao) {

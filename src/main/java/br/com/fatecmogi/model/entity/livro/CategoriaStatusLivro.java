@@ -13,6 +13,8 @@ import lombok.experimental.SuperBuilder;
 @RegisterForReflection
 public class CategoriaStatusLivro {
 
+	private Long id;
+
 	private String nome;
 
 }

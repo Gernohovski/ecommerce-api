@@ -13,6 +13,8 @@ import lombok.experimental.SuperBuilder;
 @RegisterForReflection
 public class Editora {
 
+	private Long id;
+
 	private String nome;
 
 }

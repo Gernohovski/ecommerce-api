@@ -1,5 +1,6 @@
 package br.com.fatecmogi.controller;
 
+import br.com.fatecmogi.controller.dto.livro.EditarLivroCommand;
 import br.com.fatecmogi.controller.dto.livro.LivroFiltroDTO;
 import br.com.fatecmogi.controller.dto.paginacao.PaginacaoDTO;
 import br.com.fatecmogi.service.LivroService;
@@ -19,6 +20,12 @@ public class LivroController {
 	public Response listarComFiltros(@BeanParam LivroFiltroDTO filtro, @BeanParam PaginacaoDTO paginacao) {
 		var livros = livroService.listarComFiltros(filtro, paginacao);
 		return Response.ok(livros).build();
+	}
+
+	@PutMapping("/{id}")
+	public Response atualizar(@PathVariable("id") Long id, @RequestBody EditarLivroCommand command) {
+		var livroAtualizado = livroService.atualizar(id, command);
+		return Response.ok(livroAtualizado).build();
 	}
 
 }

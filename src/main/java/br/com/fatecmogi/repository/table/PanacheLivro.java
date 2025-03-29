@@ -42,7 +42,7 @@ public class PanacheLivro extends PanacheEntityBase {
 	private Integer edicao;
 
 	@Column(name = "liv_isbn")
-	private String ISBN;
+	private String isbn;
 
 	@Column(name = "liv_numero_paginas")
 	private Integer numeroPaginas;
@@ -77,5 +77,12 @@ public class PanacheLivro extends PanacheEntityBase {
 
 	@Column(name = "liv_capa")
 	private String capa;
+
+	public void unreferenceDependecies() {
+		this.autor = null;
+		this.categorias = null;
+		this.editora = null;
+		this.grupoPrecificacao = null;
+	}
 
 }

@@ -15,6 +15,8 @@ import java.math.BigDecimal;
 @RegisterForReflection
 public class GrupoPrecificacao {
 
+	private Long id;
+
 	private String nome;
 
 	private BigDecimal margemLucro;

@@ -15,6 +15,8 @@ import java.util.Set;
 @RegisterForReflection
 public class Categoria {
 
+	private Long id;
+
 	private String nome;
 
 	private Set<Livro> livros;

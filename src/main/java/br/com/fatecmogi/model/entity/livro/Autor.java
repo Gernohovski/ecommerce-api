@@ -13,6 +13,8 @@ import lombok.experimental.SuperBuilder;
 @RegisterForReflection
 public class Autor {
 
+	private Long id;
+
 	private String nome;
 
 }

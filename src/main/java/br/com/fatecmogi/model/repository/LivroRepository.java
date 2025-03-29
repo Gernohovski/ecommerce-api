@@ -5,9 +5,14 @@ import br.com.fatecmogi.controller.dto.paginacao.PaginacaoDTO;
 import br.com.fatecmogi.model.entity.livro.Livro;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface LivroRepository {
 
 	List<Livro> findAll(LivroFiltroDTO filtro, PaginacaoDTO paginacao);
+
+	Livro update(Livro livro);
+
+	Optional<Livro> findById(Long id);
 
 }

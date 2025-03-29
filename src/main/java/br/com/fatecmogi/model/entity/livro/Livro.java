@@ -18,6 +18,8 @@ import java.util.Set;
 @RegisterForReflection
 public class Livro {
 
+	private Long id;
+
 	private Autor autor;
 
 	private Set<Categoria> categorias;
@@ -30,7 +32,7 @@ public class Livro {
 
 	private Integer edicao;
 
-	private String ISBN;
+	private String isbn;
 
 	private Integer numeroPaginas;
 

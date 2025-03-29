@@ -3,6 +3,8 @@ package br.com.fatecmogi.repository.mapper;
 import br.com.fatecmogi.model.entity.livro.Livro;
 import br.com.fatecmogi.repository.table.PanacheLivro;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 
 import java.util.List;
 
@@ -11,5 +13,9 @@ import java.util.List;
 public interface PanacheLivroMapper {
 
 	List<Livro> from(List<PanacheLivro> panacheLivro);
+
+	PanacheLivro update(@MappingTarget PanacheLivro panacheLivro, Livro livro);
+
+	Livro from(PanacheLivro panacheLivro);
 
 }
