@@ -75,4 +75,7 @@ public class PanacheLivro extends PanacheEntityBase {
 	@Column(name = "liv_ativo", columnDefinition = "BOOLEAN DEFAULT FALSE")
 	private boolean ativo;
 
+	@Column(name = "liv_capa")
+	private String capa;
+
 }

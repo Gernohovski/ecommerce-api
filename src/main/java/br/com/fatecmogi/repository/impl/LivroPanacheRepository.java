@@ -43,7 +43,7 @@ public class LivroPanacheRepository implements LivroRepository {
 			params.put("categoriaId", filtro.categoriaId);
 		}
 		if (filtro.titulo != null) {
-			query.append(" AND titulo like :titulo");
+			query.append(" AND LOWER(titulo) LIKE LOWER(:titulo)");
 			params.put("titulo", "%" + filtro.titulo + "%");
 		}
 		if (filtro.autoresId != null && !filtro.autoresId.isEmpty()) {
@@ -72,10 +72,18 @@ public class LivroPanacheRepository implements LivroRepository {
 	}
 
 	private String gerarChaveCache(LivroFiltroDTO filtro, PaginacaoDTO paginacao) {
-		return "livros:" + "categoria=" + filtro.categoriaId + "titulo=" + filtro.titulo + ":autores="
-				+ filtro.autoresId + ":precoMin=" + filtro.precoMin + ":precoMax=" + filtro.precoMax + ":condicao="
-				+ filtro.condicao + ":idioma=" + filtro.idioma + ":sortBy=" + filtro.sortBy + ":sortDirection="
-				+ filtro.sortDirection + ":pagina=" + paginacao.getPage() + ":tamanho=" + paginacao.getSize();
+		return "livros:" + "categoria=" + filtro.categoriaId
+				+ ":titulo=" + (filtro.titulo != null ? filtro.titulo.toLowerCase() : "null")
+				+ ":autores=" + filtro.autoresId
+				+ ":precoMin=" + filtro.precoMin
+				+ ":precoMax=" + filtro.precoMax
+				+ ":condicao=" + filtro.condicao
+				+ ":idioma=" + filtro.idioma
+				+ ":sortBy=" + filtro.sortBy
+				+ ":sortDirection=" + filtro.sortDirection
+				+ ":pagina=" + paginacao.getPage()
+				+ ":tamanho=" + paginacao.getSize();
 	}
+
 
 }

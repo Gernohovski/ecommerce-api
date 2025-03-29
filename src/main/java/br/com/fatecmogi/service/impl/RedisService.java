@@ -52,6 +52,7 @@ public class RedisService {
 	}
 
 	public List<Livro> buscarLivrosNoCache(String cacheKey) {
+		cacheKey = cacheKey.toLowerCase();
 		String cacheData = get(cacheKey);
 		if (cacheData != null) {
 			try {

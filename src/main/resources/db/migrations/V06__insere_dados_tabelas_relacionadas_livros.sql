@@ -64,18 +64,6 @@ INSERT INTO editoras (edt_nome) VALUES
 ('Viking Press');
 
 INSERT INTO grupos_precificacao (grp_nome, grp_margem_lucro) VALUES
-('Grupo A', 20.00),
-('Grupo B', 15.50),
-('Grupo C', 25.75),
-('Grupo D', 18.00),
-('Grupo E', 10.00),
-('Grupo F', 30.50),
-('Grupo G', 22.00),
-('Grupo H', 28.25),
-('Grupo I', 12.00),
-('Grupo J', 19.50);
-
-INSERT INTO grupos_precificacao (grp_nome, grp_margem_lucro) VALUES
 ('Ouro', 30.00),
 ('Prata', 20.00),
 ('Bronze', 10.00);
@@ -85,25 +73,35 @@ INSERT INTO categorias_status (cts_nome) VALUES
 ('Inativo');
 
 INSERT INTO livros (
-    liv_ano_publicacao, liv_titulo, liv_editora,
-    liv_edicao, liv_isbn, liv_numero_paginas, liv_sinopse,
-    liv_altura, liv_largura, liv_peso, liv_profundidade,
-    liv_codigo_barras, liv_grp_id, liv_valor_venda, liv_ativo
+    liv_aut_id, liv_ano_publicacao, liv_titulo, liv_editora, liv_edicao, liv_isbn,
+    liv_numero_paginas, liv_sinopse, liv_altura, liv_largura, liv_peso, liv_profundidade,
+    liv_codigo_barras, liv_grp_id, liv_valor_venda, liv_ativo, liv_capa
 ) VALUES
-('2007', 'Harry Potter e a Pedra Filosofal', 1, 1, '9780747532743', 223,
-    'O jovem Harry Potter descobre que é um bruxo e parte para uma escola de magia.',
-    21.0, 14.0, 0.5, 2.0, '1234567890123', 1, 39.90, TRUE),
-('1996', 'A Guerra dos Tronos', 2, 1, '9780553103540', 694,
-    'Primeiro livro da série "As Crônicas de Gelo e Fogo", onde intriga e guerra dominam o reino.',
-    24.0, 16.0, 1.2, 3.0, '2345678901234', 2, 49.90, TRUE),
-('1954', 'O Senhor dos Anéis: A Sociedade do Anel', 3, 1, '9780618574940', 423,
-    'Frodo Baggins recebe a missão de destruir o Um Anel para salvar a Terra-média.',
-    22.5, 15.5, 0.8, 2.5, '3456789012345', 3, 59.90, TRUE),
-('2001', 'Fundação', 4, 1, '9780553293353', 295,
-    'Uma obra de Isaac Asimov que mistura ficção científica e filosofia sobre o futuro da humanidade.',
-    21.5, 14.5, 0.7, 2.0, '4567890123456', 1, 29.90, TRUE),
-('1936', 'Assassinato no Expresso do Oriente', 5, 1, '9780062073501', 256,
-    'A detetive Hercule Poirot investiga um assassinato a bordo de um trem.',
-    20.0, 13.5, 0.6, 1.8, '5678901234567', 2, 34.90, TRUE);
+(
+    1, '1997', 'Harry Potter e a Pedra Filosofal', 9, 1, '978-8532511010',
+    208, 'Primeiro livro da saga Harry Potter, onde o jovem descobre ser um bruxo.',
+    21.0, 14.0, 0.45, 3.0, '9788532511010', 1, 39.90, TRUE, 'D:/Documentos/LES/ecommerce-api/src/main/resources/images/harry-potter-1.jpg'
+),
+(
+    2, '1996', 'A Guerra dos Tronos', 1, 1, '978-8556511015',
+    592, 'O primeiro livro da série As Crônicas de Gelo e Fogo.',
+    23.5, 16.0, 0.80, 5.0, '9788556511015', 2, 49.90, TRUE, 'D:/Documentos/LES/ecommerce-api/src/main/resources/images/guerra-dos-tronos.jpg'
+),
+(
+    3, '1954', 'O Senhor dos Anéis: A Sociedade do Anel', 5, 1, '978-8544001020',
+    576, 'A primeira parte da trilogia de O Senhor dos Anéis.',
+    22.0, 15.0, 0.70, 4.5, '9788544001020', 1, 59.90, TRUE, 'D:/Documentos/LES/ecommerce-api/src/main/resources/images/senhor-aneis-1.jpg'
+),
+(
+    4, '1950', 'Eu, Robô', 7, 1, '978-8535908887',
+    320, 'Uma coletânea de contos de ficção científica de Isaac Asimov.',
+    21.0, 14.0, 0.50, 3.5, '9788535908887', 3, 29.90, TRUE, 'D:/Documentos/LES/ecommerce-api/src/main/resources/images/eu-robo.jpg'
+),
+(
+    5, '1934', 'Assassinato no Expresso do Oriente', 10, 1, '978-8528613838',
+    288, 'Um dos mais famosos mistérios de Agatha Christie.',
+    20.5, 13.5, 0.40, 3.0, '9788528613838', 2, 34.90, TRUE, 'D:/Documentos/LES/ecommerce-api/src/main/resources/images/assassinato-expresso.jpg'
+);
+
 
 

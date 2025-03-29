@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import java.io.File;
 import java.math.BigDecimal;
 import java.util.Set;
 
@@ -51,5 +52,7 @@ public class Livro {
 
 	@Builder.Default
 	private boolean ativo = false;
+
+	private String capa;
 
 }
