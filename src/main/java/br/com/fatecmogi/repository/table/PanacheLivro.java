@@ -1,9 +1,5 @@
 package br.com.fatecmogi.repository.table;
 
-import br.com.fatecmogi.model.entity.livro.Autor;
-import br.com.fatecmogi.model.entity.livro.Categoria;
-import br.com.fatecmogi.model.entity.livro.Editora;
-import br.com.fatecmogi.model.entity.livro.GrupoPrecificacao;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -25,12 +21,12 @@ public class PanacheLivro extends PanacheEntityBase {
 
 	@ManyToOne
 	@JoinColumn(name = "liv_aut_id", referencedColumnName = "aut_id")
-	private Autor autor;
+	private PanacheAutor autor;
 
 	@ManyToMany
 	@JoinTable(name = "livros_categorias", joinColumns = @JoinColumn(name = "liv_id"),
 			inverseJoinColumns = @JoinColumn(name = "ctl_id"))
-	private Set<Categoria> categorias;
+	private Set<PanacheCategoria> categorias;
 
 	@Column(name = "liv_ano_publicacao")
 	private String anoPublicacao;
@@ -38,8 +34,9 @@ public class PanacheLivro extends PanacheEntityBase {
 	@Column(name = "liv_titulo")
 	private String titulo;
 
-	@Column(name = "liv_editora")
-	private Editora editora;
+	@ManyToOne
+	@JoinColumn(name = "liv_editora", referencedColumnName = "edt_id")
+	private PanacheEditora editora;
 
 	@Column(name = "liv_edicao")
 	private Integer edicao;
@@ -70,7 +67,7 @@ public class PanacheLivro extends PanacheEntityBase {
 
 	@ManyToOne
 	@JoinColumn(name = "liv_grp_id", referencedColumnName = "grp_id")
-	private GrupoPrecificacao grupoPrecificacao;
+	private PanacheGrupoPrecificacao grupoPrecificacao;
 
 	@Column(name = "liv_valor_venda")
 	private BigDecimal valorVenda;

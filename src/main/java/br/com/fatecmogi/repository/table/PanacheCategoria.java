@@ -1,6 +1,5 @@
 package br.com.fatecmogi.repository.table;
 
-import br.com.fatecmogi.model.entity.livro.Livro;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -23,6 +22,6 @@ public class PanacheCategoria extends PanacheEntityBase {
 	private String nome;
 
 	@ManyToMany(mappedBy = "categorias")
-	private Set<Livro> livros;
+	private Set<PanacheLivro> livros;
 
 }
