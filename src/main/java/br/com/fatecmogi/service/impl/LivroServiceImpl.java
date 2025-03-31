@@ -40,6 +40,7 @@ public class LivroServiceImpl implements LivroService {
 		commandValidator.validate(command);
 		var livro = livroRepository.findById(id).orElseThrow(LivroNaoEncontradoException::new);
 		var livroAtualizado = livroMapper.update(livro, command);
+		livro.validarValorVenda();
 		return livroRepository.update(livroAtualizado);
 	}
 

@@ -1,5 +1,6 @@
 package br.com.fatecmogi.model.entity.livro;
 
+import br.com.fatecmogi.model.exception.livro.LivroValorInsuficienteException;
 import io.quarkus.runtime.annotations.RegisterForReflection;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -50,11 +51,22 @@ public class Livro {
 
 	private GrupoPrecificacao grupoPrecificacao;
 
+	private BigDecimal valorTabelado;
+
 	private BigDecimal valorVenda;
 
 	@Builder.Default
 	private boolean ativo = false;
 
 	private String capa;
+
+	public void validarValorVenda() {
+		var valorMinimo = this.valorTabelado
+				.multiply(this.grupoPrecificacao.getMargemLucro().divide(BigDecimal.valueOf(100)).add(BigDecimal.ONE));
+		if (valorVenda.compareTo(valorMinimo) < 0) {
+			throw new LivroValorInsuficienteException();
+		}
+	}
+
 
 }

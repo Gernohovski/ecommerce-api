@@ -72,6 +72,9 @@ public class PanacheLivro extends PanacheEntityBase {
 	@Column(name = "liv_valor_venda")
 	private BigDecimal valorVenda;
 
+	@Column(name = "liv_valor_tabelado")
+	private BigDecimal valorTabelado;
+
 	@Column(name = "liv_ativo", columnDefinition = "BOOLEAN DEFAULT FALSE")
 	private boolean ativo;
 

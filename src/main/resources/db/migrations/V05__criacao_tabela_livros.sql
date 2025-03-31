@@ -35,6 +35,7 @@ CREATE TABLE livros (
     liv_profundidade NUMERIC(10,2),
     liv_codigo_barras VARCHAR(50),
     liv_grp_id BIGINT REFERENCES grupos_precificacao(grp_id),
+    liv_valor_tabelado NUMERIC(10,2),
     liv_valor_venda NUMERIC(10,2),
     liv_capa TEXT,
     liv_ativo BOOLEAN DEFAULT FALSE

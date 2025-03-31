@@ -75,7 +75,7 @@ INSERT INTO categorias_status (cts_nome) VALUES
 INSERT INTO livros (
     liv_aut_id, liv_ano_publicacao, liv_titulo, liv_editora, liv_edicao, liv_isbn,
     liv_numero_paginas, liv_sinopse, liv_altura, liv_largura, liv_peso, liv_profundidade,
-    liv_codigo_barras, liv_grp_id, liv_valor_venda, liv_ativo, liv_capa
+    liv_codigo_barras, liv_grp_id, liv_valor_tabelado, liv_ativo, liv_capa
 ) VALUES
 (
     1, '1997', 'Harry Potter e a Pedra Filosofal', 9, 1, '978-8532511010',
