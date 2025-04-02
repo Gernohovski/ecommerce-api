@@ -21,8 +21,8 @@ public class LivroFiltroDTO {
 	@QueryParam("categoriaId")
 	public Long categoriaId;
 
-	@QueryParam("autorId")
-	public List<Long> autoresId;
+	@QueryParam("autoresId")
+	public List<String> autoresId;
 
 	@QueryParam("titulo")
 	public String titulo;

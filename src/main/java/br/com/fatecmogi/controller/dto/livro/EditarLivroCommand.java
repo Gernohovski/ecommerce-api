@@ -61,6 +61,12 @@ public class EditarLivroCommand {
     @NotNull(message = "O grupo de precificação do livro é obrigatório.")
     private Long grupoPrecificacaoId;
 
+    @NotNull(message = "O idioma do livro é obrigatório.")
+    private Long idiomaId;
+
+    @NotNull(message = "A condição do livro é obrigatório.")
+    private Long condicaoId;
+
     @NotNull(message = "O valor de venda do livro é obrigatório.")
     private BigDecimal valorVenda;
 

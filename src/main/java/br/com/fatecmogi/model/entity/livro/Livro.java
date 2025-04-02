@@ -60,6 +60,10 @@ public class Livro {
 
 	private String capa;
 
+	private Idioma idioma;
+
+	private Condicao condicao;
+
 	public void validarValorVenda() {
 		var valorMinimo = this.valorTabelado
 				.multiply(this.grupoPrecificacao.getMargemLucro().divide(BigDecimal.valueOf(100)).add(BigDecimal.ONE));

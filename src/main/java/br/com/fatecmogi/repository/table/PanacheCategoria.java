@@ -21,7 +21,6 @@ public class PanacheCategoria extends PanacheEntityBase {
 	@Column(name = "ctl_nome")
 	private String nome;
 
-	@ManyToMany(mappedBy = "categorias")
+	@ManyToMany(mappedBy = "categorias", fetch = FetchType.LAZY)
 	private Set<PanacheLivro> livros;
-
 }

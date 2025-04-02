@@ -23,7 +23,7 @@ public class PanacheLivro extends PanacheEntityBase {
 	@JoinColumn(name = "liv_aut_id", referencedColumnName = "aut_id")
 	private PanacheAutor autor;
 
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "livros_categorias", joinColumns = @JoinColumn(name = "liv_id"),
 			inverseJoinColumns = @JoinColumn(name = "ctl_id"))
 	private Set<PanacheCategoria> categorias;
@@ -81,11 +81,21 @@ public class PanacheLivro extends PanacheEntityBase {
 	@Column(name = "liv_capa")
 	private String capa;
 
+	@ManyToOne
+	@JoinColumn(name = "liv_idioma", referencedColumnName = "idm_id")
+	private PanacheIdioma idioma;
+
+	@ManyToOne
+	@JoinColumn(name = "liv_condicao", referencedColumnName = "cnd_id")
+	private PanacheCondicao condicao;
+
 	public void unreferenceDependecies() {
 		this.autor = null;
 		this.categorias = null;
 		this.editora = null;
 		this.grupoPrecificacao = null;
+		this.idioma = null;
+		this.condicao = null;
 	}
 
 }

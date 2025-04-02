@@ -36,7 +36,7 @@ INSERT INTO categorias_livros (ctl_nome) VALUES
 ('Romance'),
 ('Fantasia'),
 ('Terror'),
-('Ficção Científica'),
+('Ficção'),
 ('Mistério'),
 ('Inteligente'),
 ('Tragédia');
@@ -72,35 +72,44 @@ INSERT INTO categorias_status (cts_nome) VALUES
 ('Ativo'),
 ('Inativo');
 
+INSERT INTO idiomas (idm_nome) VALUES
+('Português'),
+('Inglês'),
+('Espanhol');
+
+INSERT INTO condicoes (cnd_nome) VALUES
+('Novo'),
+('Usado');
+
 INSERT INTO livros (
-    liv_aut_id, liv_ano_publicacao, liv_titulo, liv_editora, liv_edicao, liv_isbn,
+    liv_aut_id, liv_ano_publicacao, liv_titulo, liv_editora, liv_idioma, liv_condicao, liv_edicao, liv_isbn,
     liv_numero_paginas, liv_sinopse, liv_altura, liv_largura, liv_peso, liv_profundidade,
     liv_codigo_barras, liv_grp_id, liv_valor_tabelado, liv_ativo, liv_capa
 ) VALUES
 (
-    1, '1997', 'Harry Potter e a Pedra Filosofal', 9, 1, '978-8532511010',
+    1, '1997', 'Harry Potter e a Pedra Filosofal', 9, 1, 1, 1, '978-8532511010',
     208, 'Primeiro livro da saga Harry Potter, onde o jovem descobre ser um bruxo.',
-    21.0, 14.0, 0.45, 3.0, '9788532511010', 1, 39.90, TRUE, 'D:/Documentos/LES/ecommerce-api/src/main/resources/images/harry-potter-1.jpg'
+    21.0, 14.0, 0.45, 3.0, '9788532511010', 1, 39.90, TRUE, '/book-images/harry-potter-1.jpg'
 ),
 (
-    2, '1996', 'A Guerra dos Tronos', 1, 1, '978-8556511015',
+    2, '1996', 'A Guerra dos Tronos', 1, 2, 2, 1, '978-8556511015',
     592, 'O primeiro livro da série As Crônicas de Gelo e Fogo.',
-    23.5, 16.0, 0.80, 5.0, '9788556511015', 2, 49.90, TRUE, 'D:/Documentos/LES/ecommerce-api/src/main/resources/images/guerra-dos-tronos.jpg'
+    23.5, 16.0, 0.80, 5.0, '9788556511015', 2, 49.90, TRUE, '/book-images/guerra-dos-tronos.jpg'
 ),
 (
-    3, '1954', 'O Senhor dos Anéis: A Sociedade do Anel', 5, 1, '978-8544001020',
+    3, '1954', 'O Senhor dos Anéis: A Sociedade do Anel', 5, 3, 1, 1, '978-8544001020',
     576, 'A primeira parte da trilogia de O Senhor dos Anéis.',
-    22.0, 15.0, 0.70, 4.5, '9788544001020', 1, 59.90, TRUE, 'D:/Documentos/LES/ecommerce-api/src/main/resources/images/senhor-aneis-1.jpg'
+    22.0, 15.0, 0.70, 4.5, '9788544001020', 1, 59.90, TRUE, '/book-images/senhor-aneis-1.jpg'
 ),
 (
-    4, '1950', 'Eu, Robô', 7, 1, '978-8535908887',
+    4, '1950', 'Eu, Robô', 7, 1, 2, 1, '978-8535908887',
     320, 'Uma coletânea de contos de ficção científica de Isaac Asimov.',
-    21.0, 14.0, 0.50, 3.5, '9788535908887', 3, 29.90, TRUE, 'D:/Documentos/LES/ecommerce-api/src/main/resources/images/eu-robo.jpg'
+    21.0, 14.0, 0.50, 3.5, '9788535908887', 3, 29.90, TRUE, '/book-images/eu-robo.jpg'
 ),
 (
-    5, '1934', 'Assassinato no Expresso do Oriente', 10, 1, '978-8528613838',
+    5, '1934', 'Assassinato no Expresso do Oriente', 10, 1, 2, 2, '978-8528613838',
     288, 'Um dos mais famosos mistérios de Agatha Christie.',
-    20.5, 13.5, 0.40, 3.0, '9788528613838', 2, 34.90, TRUE, 'D:/Documentos/LES/ecommerce-api/src/main/resources/images/assassinato-expresso.jpg'
+    20.5, 13.5, 0.40, 3.0, '9788528613838', 2, 34.90, TRUE, '/book-images/assassinato-expresso.jpg'
 );
 
 

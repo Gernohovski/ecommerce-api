@@ -20,6 +20,8 @@ public interface LivroMapper {
     @Mapping(target = "categorias", source = "categoriasId", qualifiedByName = "mapCategorias")
     @Mapping(target = "editora.id", source = "editoraId")
     @Mapping(target = "grupoPrecificacao.id", source = "grupoPrecificacaoId")
+    @Mapping(target = "idioma.id", source = "idiomaId")
+    @Mapping(target = "condicao.id", source = "condicaoId")
     Livro update(@MappingTarget Livro livro, EditarLivroCommand command);
 
     @Named("mapCategorias")

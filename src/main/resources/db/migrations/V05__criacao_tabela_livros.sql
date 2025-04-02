@@ -19,12 +19,24 @@ CREATE TABLE grupos_precificacao (
     grp_margem_lucro NUMERIC(10,2) NOT NULL
 );
 
+CREATE TABLE idiomas (
+    idm_id BIGSERIAL PRIMARY KEY,
+    idm_nome VARCHAR(30) NOT NULL
+);
+
+CREATE TABLE condicoes (
+    cnd_id BIGSERIAL PRIMARY KEY,
+    cnd_nome VARCHAR(30) NOT NULL
+);
+
 CREATE TABLE livros (
     liv_id BIGSERIAL PRIMARY KEY,
     liv_aut_id BIGINT REFERENCES autores(aut_id),
     liv_ano_publicacao VARCHAR(4),
     liv_titulo VARCHAR(255) NOT NULL,
     liv_editora BIGINT REFERENCES editoras(edt_id),
+    liv_idioma BIGINT REFERENCES idiomas(idm_id),
+    liv_condicao BIGINT REFERENCES condicoes(cnd_id),
     liv_edicao INT,
     liv_isbn VARCHAR(20),
     liv_numero_paginas INT,
