@@ -11,12 +11,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/v1/autores")
 public class AutorController {
 
-    @Inject
-    AutorService autorService;
+	@Inject
+	AutorService autorService;
 
-    @GetMapping
-    public Response listar() {
-        var autores = autorService.listar();
-        return Response.status(Response.Status.OK).entity(autores).build();
-    }
+	@GetMapping
+	public Response listar() {
+		var autores = autorService.listar();
+		return Response.status(Response.Status.OK).entity(autores).build();
+	}
+
 }

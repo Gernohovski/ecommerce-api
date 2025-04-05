@@ -9,6 +9,6 @@ import java.util.List;
 @Mapper(componentModel = "cdi")
 public interface PanacheIdiomaMapper {
 
-    List<Idioma> from(List<PanacheIdioma> panacheIdioma);
+	List<Idioma> from(List<PanacheIdioma> panacheIdioma);
 
 }

@@ -34,7 +34,7 @@ public class LivroFiltroDTO {
 	public String condicao;
 
 	@QueryParam("idioma")
-	public String idioma;
+	public List<String> idioma;
 
 	@QueryParam("sortBy")
 	public String sortBy = "valorVenda";

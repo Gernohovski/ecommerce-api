@@ -5,18 +5,20 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
-@Table(name = "idiomas")
+@Table(name = "estoques")
 @Getter
 @Setter
-public class PanacheIdioma extends PanacheEntityBase {
+public class PanacheEstoque extends PanacheEntityBase {
 
 	@Id
-	@Column(name = "idm_id")
+	@Column(name = "est_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(name = "idm_nome")
-	private String nome;
+	@OneToMany(mappedBy = "estoque", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<PanacheItemEstoque> itens;
 
 }

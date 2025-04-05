@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface IdiomaService {
 
-    List<Idioma> listar();
+	List<Idioma> listar();
 
 }

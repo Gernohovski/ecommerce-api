@@ -27,7 +27,6 @@ public class LivroServiceImpl implements LivroService {
 	@Inject
 	CommandValidator commandValidator;
 
-
 	@Override
 	@Transactional
 	public List<Livro> listarComFiltros(LivroFiltroDTO filtro, PaginacaoDTO paginacao) {

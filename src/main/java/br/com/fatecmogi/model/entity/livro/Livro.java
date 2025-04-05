@@ -8,7 +8,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-import java.io.File;
 import java.math.BigDecimal;
 import java.util.Set;
 
@@ -66,11 +65,10 @@ public class Livro {
 
 	public void validarValorVenda() {
 		var valorMinimo = this.valorTabelado
-				.multiply(this.grupoPrecificacao.getMargemLucro().divide(BigDecimal.valueOf(100)).add(BigDecimal.ONE));
+			.multiply(this.grupoPrecificacao.getMargemLucro().divide(BigDecimal.valueOf(100)).add(BigDecimal.ONE));
 		if (valorVenda.compareTo(valorMinimo) < 0) {
 			throw new LivroValorInsuficienteException();
 		}
 	}
-
 
 }

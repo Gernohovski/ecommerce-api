@@ -9,6 +9,6 @@ import java.util.List;
 @Mapper(componentModel = "cdi")
 public interface PanacheCondicaoMapper {
 
-    List<Condicao> from(List<PanacheCondicao> panacheCondicao);
+	List<Condicao> from(List<PanacheCondicao> panacheCondicao);
 
 }

@@ -1,7 +1,6 @@
 package br.com.fatecmogi.service.impl;
 
 import br.com.fatecmogi.controller.dto.livro.CategoriaLivroDTO;
-import br.com.fatecmogi.model.entity.livro.Categoria;
 import br.com.fatecmogi.model.repository.CategoriasLivrosRepository;
 import br.com.fatecmogi.service.CategoriasLivrosService;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -12,12 +11,12 @@ import java.util.List;
 @ApplicationScoped
 public class CategoriasLivrosServiceImpl implements CategoriasLivrosService {
 
-    @Inject
-    CategoriasLivrosRepository categoriasLivrosRepository;
+	@Inject
+	CategoriasLivrosRepository categoriasLivrosRepository;
 
-    @Override
-    public List<CategoriaLivroDTO> listar() {
-        return categoriasLivrosRepository.findAll();
-    }
+	@Override
+	public List<CategoriaLivroDTO> listar() {
+		return categoriasLivrosRepository.findAll();
+	}
 
 }

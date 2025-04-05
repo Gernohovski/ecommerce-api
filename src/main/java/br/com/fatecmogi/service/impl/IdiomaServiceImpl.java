@@ -11,11 +11,12 @@ import java.util.List;
 @ApplicationScoped
 public class IdiomaServiceImpl implements IdiomaService {
 
-    @Inject
-    IdiomaRepository idiomaRepository;
+	@Inject
+	IdiomaRepository idiomaRepository;
 
-    @Override
-    public List<Idioma> listar() {
-        return idiomaRepository.findAll();
-    }
+	@Override
+	public List<Idioma> listar() {
+		return idiomaRepository.findAll();
+	}
+
 }

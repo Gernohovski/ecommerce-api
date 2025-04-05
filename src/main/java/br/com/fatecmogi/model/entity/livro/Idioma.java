@@ -13,8 +13,8 @@ import lombok.experimental.SuperBuilder;
 @RegisterForReflection
 public class Idioma {
 
-    private Long id;
+	private Long id;
 
-    private String nome;
+	private String nome;
 
 }

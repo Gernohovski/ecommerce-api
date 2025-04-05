@@ -1,6 +1,5 @@
 package br.com.fatecmogi.controller;
 
-import br.com.fatecmogi.service.CategoriasLivrosService;
 import br.com.fatecmogi.service.IdiomaService;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.core.Response;
@@ -12,13 +11,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/v1/idiomas")
 public class IdiomaController {
 
-    @Inject
-    IdiomaService idiomaService;
+	@Inject
+	IdiomaService idiomaService;
 
-    @GetMapping
-    public Response listar() {
-        var idiomas = idiomaService.listar();
-        return Response.status(Response.Status.OK).entity(idiomas).build();
-    }
+	@GetMapping
+	public Response listar() {
+		var idiomas = idiomaService.listar();
+		return Response.status(Response.Status.OK).entity(idiomas).build();
+	}
 
 }

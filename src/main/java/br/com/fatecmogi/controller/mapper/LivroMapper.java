@@ -15,26 +15,25 @@ import java.util.stream.Collectors;
 @Mapper(componentModel = "cdi")
 public interface LivroMapper {
 
-    @Mapping(target = "ativo", ignore = true)
-    @Mapping(target = "autor.id", source = "autorId")
-    @Mapping(target = "categorias", source = "categoriasId", qualifiedByName = "mapCategorias")
-    @Mapping(target = "editora.id", source = "editoraId")
-    @Mapping(target = "grupoPrecificacao.id", source = "grupoPrecificacaoId")
-    @Mapping(target = "idioma.id", source = "idiomaId")
-    @Mapping(target = "condicao.id", source = "condicaoId")
-    Livro update(@MappingTarget Livro livro, EditarLivroCommand command);
+	@Mapping(target = "ativo", ignore = true)
+	@Mapping(target = "autor.id", source = "autorId")
+	@Mapping(target = "categorias", source = "categoriasId", qualifiedByName = "mapCategorias")
+	@Mapping(target = "editora.id", source = "editoraId")
+	@Mapping(target = "grupoPrecificacao.id", source = "grupoPrecificacaoId")
+	@Mapping(target = "idioma.id", source = "idiomaId")
+	@Mapping(target = "condicao.id", source = "condicaoId")
+	Livro update(@MappingTarget Livro livro, EditarLivroCommand command);
 
-    @Named("mapCategorias")
-    default Set<Categoria> mapCategorias(Set<Long> categoriasId) {
-        if (categoriasId == null) {
-            return Collections.emptySet();
-        }
-        return categoriasId.stream()
-                .map(id -> {
-                    Categoria categoria = new Categoria();
-                    categoria.setId(id);
-                    return categoria;
-                })
-                .collect(Collectors.toSet());
-    }
+	@Named("mapCategorias")
+	default Set<Categoria> mapCategorias(Set<Long> categoriasId) {
+		if (categoriasId == null) {
+			return Collections.emptySet();
+		}
+		return categoriasId.stream().map(id -> {
+			Categoria categoria = new Categoria();
+			categoria.setId(id);
+			return categoria;
+		}).collect(Collectors.toSet());
+	}
+
 }

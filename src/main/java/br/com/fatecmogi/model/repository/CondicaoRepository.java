@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface CondicaoRepository {
 
-    List<Condicao> findAll();
+	List<Condicao> findAll();
 
 }

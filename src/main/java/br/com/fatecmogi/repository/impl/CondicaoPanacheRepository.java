@@ -12,13 +12,13 @@ import java.util.List;
 @ApplicationScoped
 public class CondicaoPanacheRepository implements CondicaoRepository {
 
-    @Inject
-    PanacheCondicaoMapper panacheCondicaoMapper;
+	@Inject
+	PanacheCondicaoMapper panacheCondicaoMapper;
 
-    @Override
-    public List<Condicao> findAll() {
-        List<PanacheCondicao> panacheCondicao = PanacheCondicao.findAll().list();
-        return panacheCondicaoMapper.from(panacheCondicao);
-    }
+	@Override
+	public List<Condicao> findAll() {
+		List<PanacheCondicao> panacheCondicao = PanacheCondicao.findAll().list();
+		return panacheCondicaoMapper.from(panacheCondicao);
+	}
 
 }

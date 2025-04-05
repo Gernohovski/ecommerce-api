@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface IdiomaRepository {
 
-    List<Idioma> findAll();
+	List<Idioma> findAll();
 
 }

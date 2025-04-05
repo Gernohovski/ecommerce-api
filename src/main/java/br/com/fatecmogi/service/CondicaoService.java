@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface CondicaoService {
 
-    List<Condicao> listar();
+	List<Condicao> listar();
 
 }

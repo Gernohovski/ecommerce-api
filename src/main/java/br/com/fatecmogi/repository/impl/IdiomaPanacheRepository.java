@@ -12,13 +12,13 @@ import java.util.List;
 @ApplicationScoped
 public class IdiomaPanacheRepository implements IdiomaRepository {
 
-    @Inject
-    PanacheIdiomaMapper panacheIdiomaMapper;
+	@Inject
+	PanacheIdiomaMapper panacheIdiomaMapper;
 
-    @Override
-    public List<Idioma> findAll() {
-        List<PanacheIdioma> panacheIdioma = PanacheIdioma.findAll().list();
-        return panacheIdiomaMapper.from(panacheIdioma);
-    }
+	@Override
+	public List<Idioma> findAll() {
+		List<PanacheIdioma> panacheIdioma = PanacheIdioma.findAll().list();
+		return panacheIdiomaMapper.from(panacheIdioma);
+	}
 
 }

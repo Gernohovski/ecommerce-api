@@ -1,5 +1,7 @@
-package br.com.fatecmogi.model.entity.livro;
+package br.com.fatecmogi.model.entity.pedido;
 
+import br.com.fatecmogi.model.entity.cliente.Cliente;
+import br.com.fatecmogi.model.entity.livro.Livro;
 import io.quarkus.runtime.annotations.RegisterForReflection;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,10 +13,14 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @NoArgsConstructor
 @RegisterForReflection
-public class Condicao {
+public class ItemCarrinho {
 
 	private Long id;
 
-	private String nome;
+	private Livro livro;
+
+	private Integer quantidade;
+
+	private Cliente cliente;
 
 }

@@ -4,8 +4,8 @@ import br.com.fatecmogi.controller.exceptionHandler.APIException;
 
 public class LivroNaoEncontradoException extends APIException {
 
-    public LivroNaoEncontradoException() {
-        super("Livro não encontrado.", 404);
-    }
+	public LivroNaoEncontradoException() {
+		super("Livro não encontrado.", 404);
+	}
 
 }

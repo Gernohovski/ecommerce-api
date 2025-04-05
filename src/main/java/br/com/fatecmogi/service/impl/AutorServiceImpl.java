@@ -11,12 +11,12 @@ import java.util.List;
 @ApplicationScoped
 public class AutorServiceImpl implements AutorService {
 
-    @Inject
-    AutorRepository autorRepository;
+	@Inject
+	AutorRepository autorRepository;
 
+	@Override
+	public List<Autor> listar() {
+		return autorRepository.findAll();
+	}
 
-    @Override
-    public List<Autor> listar() {
-        return autorRepository.findAll();
-    }
 }

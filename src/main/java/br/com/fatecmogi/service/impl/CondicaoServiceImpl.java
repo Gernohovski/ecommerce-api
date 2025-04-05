@@ -11,12 +11,12 @@ import java.util.List;
 @ApplicationScoped
 public class CondicaoServiceImpl implements CondicaoService {
 
-    @Inject
-    CondicaoRepository condicaoRepository;
+	@Inject
+	CondicaoRepository condicaoRepository;
 
-    @Override
-    public List<Condicao> listar() {
-        return condicaoRepository.findAll();
-    }
+	@Override
+	public List<Condicao> listar() {
+		return condicaoRepository.findAll();
+	}
 
 }

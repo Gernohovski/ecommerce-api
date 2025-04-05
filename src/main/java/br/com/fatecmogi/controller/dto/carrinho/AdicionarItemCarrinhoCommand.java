@@ -1,4 +1,4 @@
-package br.com.fatecmogi.controller.dto.livro;
+package br.com.fatecmogi.controller.dto.carrinho;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,10 +9,6 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CategoriaLivroDTO {
-
-	private Long id;
-
-	private String nome;
+public class AdicionarItemCarrinhoCommand {
 
 }
