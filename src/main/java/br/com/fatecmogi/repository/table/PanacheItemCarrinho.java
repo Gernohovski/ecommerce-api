@@ -23,13 +23,9 @@ public class PanacheItemCarrinho extends PanacheEntityBase {
 
 	@ManyToOne
 	@JoinColumn(name = "liv_id")
-	private Livro livro;
+	private PanacheLivro livro;
 
 	@Column(name = "itc_quantidade")
 	private Integer quantidade;
-
-	@ManyToOne
-	@JoinColumn(name = "clt_id")
-	private PanacheCliente cliente;
 
 }

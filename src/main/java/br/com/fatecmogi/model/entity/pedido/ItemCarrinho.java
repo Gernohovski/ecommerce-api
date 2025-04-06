@@ -19,8 +19,8 @@ public class ItemCarrinho {
 
 	private Livro livro;
 
-	private Integer quantidade;
+	private Carrinho carrinho;
 
-	private Cliente cliente;
+	private Integer quantidade;
 
 }

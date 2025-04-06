@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -20,11 +21,30 @@ public class Carrinho {
 
 	private Long id;
 
-	private List<ItemCarrinho> itens;
+	@Builder.Default
+	private List<ItemCarrinho> itens = new ArrayList<>();
 
 	@Builder.Default
 	private LocalDateTime dataExpiracao = LocalDateTime.now().plusMinutes(30);
 
+	@Builder.Default
+	private LocalDateTime dataCriacao = LocalDateTime.now();
+
+	@Builder.Default
+	private boolean comprado = false;
+
 	private Cliente cliente;
+
+	public void atualizar() {
+		this.dataExpiracao = LocalDateTime.now().plusMinutes(30);
+	}
+
+	public void addItem(ItemCarrinho item) {
+		this.itens.add(item);
+	}
+
+	public void removeItem(Long id) {
+		this.itens.removeIf(item -> item.getId().equals(id));
+	}
 
 }
