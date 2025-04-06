@@ -7,6 +7,6 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "cdi")
 public interface CarrinhoMapper {
 
-    CarrinhoDTO from(Carrinho carrinho);
+	CarrinhoDTO from(Carrinho carrinho);
 
 }

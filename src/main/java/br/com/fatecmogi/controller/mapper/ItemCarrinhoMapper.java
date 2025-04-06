@@ -8,8 +8,8 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "cdi")
 public interface ItemCarrinhoMapper {
 
-    @Mapping(target = "livro.id", source = "livroId")
-    @Mapping(target = "carrinho", ignore = true)
-    ItemCarrinho from(AdicionarItemCarrinhoCommand command);
+	@Mapping(target = "livro.id", source = "livroId")
+	@Mapping(target = "carrinho", ignore = true)
+	ItemCarrinho from(AdicionarItemCarrinhoCommand command);
 
 }

@@ -1,6 +1,6 @@
 package br.com.fatecmogi.controller.dto.carrinho;
 
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,7 +12,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 public class RemoverCarrinhoCommand {
 
-    @NotBlank(message = "O item a ser removido é obrigatório.")
-    Long itemId;
+	@NotNull(message = "O item a ser removido é obrigatório.")
+	Long itemId;
 
 }

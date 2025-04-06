@@ -7,12 +7,12 @@ import java.util.Optional;
 
 public interface CarrinhoRepository {
 
-    List<Carrinho> findAllByClienteId(Long id);
+	List<Carrinho> findAllByClienteId(Long id);
 
-    Carrinho salvar(Carrinho carrinho);
+	Carrinho salvar(Carrinho carrinho);
 
-    Carrinho atualizar(Carrinho carrinho);
+	Carrinho atualizar(Carrinho carrinho);
 
-    Optional<Carrinho> buscar(Long id);
+	Optional<Carrinho> buscar(Long id);
 
 }

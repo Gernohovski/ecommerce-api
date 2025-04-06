@@ -1,6 +1,5 @@
 package br.com.fatecmogi.model.entity.pedido;
 
-import br.com.fatecmogi.model.entity.cliente.Cliente;
 import br.com.fatecmogi.model.entity.livro.Livro;
 import io.quarkus.runtime.annotations.RegisterForReflection;
 import lombok.AllArgsConstructor;

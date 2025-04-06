@@ -17,14 +17,13 @@ public class CarrinhoController {
 
 	@PostMapping("/{id}/adicionar")
 	public Response adicionarItem(@PathVariable("id") Long clienteId,
-								  @RequestBody AdicionarItemCarrinhoCommand command) {
+			@RequestBody AdicionarItemCarrinhoCommand command) {
 		var carrinho = carrinhoService.adicionarItem(command, clienteId);
 		return Response.status(Response.Status.OK).entity(carrinho).build();
 	}
 
 	@PostMapping("/{id}/remover")
-	public Response removerItem(@PathVariable("id") Long clienteId,
-								  @RequestBody RemoverCarrinhoCommand command) {
+	public Response removerItem(@PathVariable("id") Long clienteId, @RequestBody RemoverCarrinhoCommand command) {
 		var carrinho = carrinhoService.removerItem(command, clienteId);
 		return Response.status(Response.Status.OK).entity(carrinho).build();
 	}

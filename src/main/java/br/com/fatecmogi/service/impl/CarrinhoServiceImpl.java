@@ -22,7 +22,6 @@ import jakarta.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
 
 @ApplicationScoped
 public class CarrinhoServiceImpl implements CarrinhoService {
@@ -53,7 +52,7 @@ public class CarrinhoServiceImpl implements CarrinhoService {
 		var carrinhoValido = getCarrinhoValido(clienteId);
 		var itemCarrinho = itemCarrinhoMapper.from(command);
 		itemCarrinho.setLivro(livro);
-		if(carrinhoValido == null) {
+		if (carrinhoValido == null) {
 			var carrinho = Carrinho.builder().itens(List.of(itemCarrinho)).cliente(cliente).build();
 			return carrinhoMapper.from(carrinhoRepository.salvar(carrinho));
 		}
@@ -77,9 +76,10 @@ public class CarrinhoServiceImpl implements CarrinhoService {
 	@Transactional
 	public CarrinhoDTO getCarrinho(Long clienteId) {
 		var cliente = clienteRepository.findById(clienteId).orElseThrow(ClienteNaoEncontratoException::new);
-		var carrinhoSalvo = carrinhoRepository.findAllByClienteId(clienteId).stream()
-				.max(Comparator.comparing(Carrinho::getDataCriacao));
-		if(carrinhoSalvo.isEmpty()) {
+		var carrinhoSalvo = carrinhoRepository.findAllByClienteId(clienteId)
+			.stream()
+			.max(Comparator.comparing(Carrinho::getDataCriacao));
+		if (carrinhoSalvo.isEmpty()) {
 			var carrinho = Carrinho.builder().cliente(cliente).build();
 			return carrinhoMapper.from(carrinhoRepository.salvar(carrinho));
 		}
@@ -89,7 +89,8 @@ public class CarrinhoServiceImpl implements CarrinhoService {
 	@Override
 	@Transactional
 	public CarrinhoDTO alterarQuantidade(AlterarQuantidadeItemCommand command) {
-		var itemCarrinho = itemCarrinhoRepository.findById(command.getItemId()).orElseThrow(ItemCarrinhoNaoEncontradoException::new);
+		var itemCarrinho = itemCarrinhoRepository.findById(command.getItemId())
+			.orElseThrow(ItemCarrinhoNaoEncontradoException::new);
 		itemCarrinho.setQuantidade(command.getQuantidade());
 		var carrinho = itemCarrinhoRepository.update(itemCarrinho);
 		return carrinhoMapper.from(carrinho);
@@ -98,9 +99,11 @@ public class CarrinhoServiceImpl implements CarrinhoService {
 	@Transactional
 	public Carrinho getCarrinhoValido(Long clienteId) {
 		var carrinhosCliente = carrinhoRepository.findAllByClienteId(clienteId);
-		return carrinhosCliente.stream().filter(carrinhoCliente ->
-				carrinhoCliente.getDataExpiracao().isAfter(LocalDateTime.now()) && !carrinhoCliente.isComprado())
-				.findFirst().orElse(null);
+		return carrinhosCliente.stream()
+			.filter(carrinhoCliente -> carrinhoCliente.getDataExpiracao().isAfter(LocalDateTime.now())
+					&& !carrinhoCliente.isComprado())
+			.findFirst()
+			.orElse(null);
 	}
 
 }

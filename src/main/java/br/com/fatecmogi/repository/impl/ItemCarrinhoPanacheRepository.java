@@ -16,32 +16,31 @@ import java.util.Optional;
 @ApplicationScoped
 public class ItemCarrinhoPanacheRepository implements ItemCarrinhoRepository {
 
-    @Inject
-    PanacheItemCarrinhoMapper panacheItemCarrinhoMapper;
+	@Inject
+	PanacheItemCarrinhoMapper panacheItemCarrinhoMapper;
 
-    @Inject
-    PanacheCarrinhoMapper panacheCarrinhoMapper;
+	@Inject
+	PanacheCarrinhoMapper panacheCarrinhoMapper;
 
-    @Override
-    public Carrinho update(ItemCarrinho itemCarrinho) {
-        PanacheItemCarrinho panacheItemCarrinho = PanacheItemCarrinho.findById(itemCarrinho.getId());
-        panacheItemCarrinho = panacheItemCarrinhoMapper.update(panacheItemCarrinho, itemCarrinho);
-        EntityManager entityManager = PanacheItemCarrinho.getEntityManager();
-        entityManager.merge(panacheItemCarrinho);
-        PanacheCarrinho carrinho = PanacheCarrinho.findById(itemCarrinho.getCarrinho().getId());
-        return panacheCarrinhoMapper.from(carrinho);
-    }
+	@Override
+	public Carrinho update(ItemCarrinho itemCarrinho) {
+		PanacheItemCarrinho panacheItemCarrinho = PanacheItemCarrinho.findById(itemCarrinho.getId());
+		panacheItemCarrinho = panacheItemCarrinhoMapper.update(panacheItemCarrinho, itemCarrinho);
+		EntityManager entityManager = PanacheItemCarrinho.getEntityManager();
+		entityManager.merge(panacheItemCarrinho);
+		PanacheCarrinho carrinho = PanacheCarrinho.findById(itemCarrinho.getCarrinho().getId());
+		return panacheCarrinhoMapper.from(carrinho);
+	}
 
-    @Override
-    public Optional<ItemCarrinho> findById(Long id) {
-        PanacheItemCarrinho panacheItemCarrinho = PanacheItemCarrinho.findById(id);
-        if(panacheItemCarrinho == null) {
-            return Optional.empty();
-        }
-        var itemCarrinho = panacheItemCarrinhoMapper.from(panacheItemCarrinho);
-        itemCarrinho.setCarrinho(panacheCarrinhoMapper.from(panacheItemCarrinho.getCarrinho()));
-        return Optional.of(itemCarrinho);
-    }
-
+	@Override
+	public Optional<ItemCarrinho> findById(Long id) {
+		PanacheItemCarrinho panacheItemCarrinho = PanacheItemCarrinho.findById(id);
+		if (panacheItemCarrinho == null) {
+			return Optional.empty();
+		}
+		var itemCarrinho = panacheItemCarrinhoMapper.from(panacheItemCarrinho);
+		itemCarrinho.setCarrinho(panacheCarrinhoMapper.from(panacheItemCarrinho.getCarrinho()));
+		return Optional.of(itemCarrinho);
+	}
 
 }

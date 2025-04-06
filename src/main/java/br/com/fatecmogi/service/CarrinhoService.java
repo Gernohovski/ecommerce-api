@@ -4,7 +4,6 @@ import br.com.fatecmogi.controller.dto.carrinho.AdicionarItemCarrinhoCommand;
 import br.com.fatecmogi.controller.dto.carrinho.AlterarQuantidadeItemCommand;
 import br.com.fatecmogi.controller.dto.carrinho.CarrinhoDTO;
 import br.com.fatecmogi.controller.dto.carrinho.RemoverCarrinhoCommand;
-import br.com.fatecmogi.model.entity.pedido.Carrinho;
 
 public interface CarrinhoService {
 

@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -30,6 +31,8 @@ public class Pedido {
 	private EnderecoResidencial endereco;
 
 	private List<CartaoCredito> cartoesCredito;
+
+	private BigDecimal valorPedido;
 
 	private Cliente cliente;
 
