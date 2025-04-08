@@ -39,11 +39,11 @@ CREATE TABLE pedidos (
     stp_id BIGINT,
     car_id BIGINT,
     ped_data_pedido DATE,
-    ers_id BIGINT,
+    eet_id BIGINT,
     clt_id BIGINT,
     CONSTRAINT fk_pedido_situacao FOREIGN KEY (stp_id) REFERENCES situacoes_pedido(stp_id),
     CONSTRAINT fk_pedido_carrinho FOREIGN KEY (car_id) REFERENCES carrinhos(car_id),
-    CONSTRAINT fk_pedido_endereco FOREIGN KEY (ers_id) REFERENCES enderecos_residencial(ers_id),
+    CONSTRAINT fk_pedido_endereco FOREIGN KEY (eet_id) REFERENCES enderecos_entrega(eet_id),
     CONSTRAINT fk_pedido_cliente FOREIGN KEY (clt_id) REFERENCES clientes(clt_id)
 );
 

@@ -56,6 +56,19 @@ public class CarrinhoServiceImpl implements CarrinhoService {
 			var carrinho = Carrinho.builder().itens(List.of(itemCarrinho)).cliente(cliente).build();
 			return carrinhoMapper.from(carrinhoRepository.salvar(carrinho));
 		}
+		var semLivro = carrinhoValido.getItens().stream().noneMatch(item -> item.getLivro().getId()
+				.equals(command.getLivroId()));
+        if (!semLivro) {
+			var itemAdicionado = carrinhoValido.getItens().stream().filter(item -> item.getLivro().getId()
+					.equals(command.getLivroId())).findFirst();
+			if (itemAdicionado.isPresent()) {
+				var item = itemAdicionado.get();
+				return alterarQuantidade(AlterarQuantidadeItemCommand.builder()
+						.itemId(item.getId())
+						.quantidade(item.getQuantidade() + 1)
+						.build());
+			}
+		}
 		itemCarrinho.setCarrinho(carrinhoValido);
 		carrinhoValido.addItem(itemCarrinho);
 		carrinhoValido.atualizar();
@@ -76,14 +89,12 @@ public class CarrinhoServiceImpl implements CarrinhoService {
 	@Transactional
 	public CarrinhoDTO getCarrinho(Long clienteId) {
 		var cliente = clienteRepository.findById(clienteId).orElseThrow(ClienteNaoEncontratoException::new);
-		var carrinhoSalvo = carrinhoRepository.findAllByClienteId(clienteId)
-			.stream()
-			.max(Comparator.comparing(Carrinho::getDataCriacao));
-		if (carrinhoSalvo.isEmpty()) {
+		var carrinhoValido = getCarrinhoValido(clienteId);
+		if (carrinhoValido == null) {
 			var carrinho = Carrinho.builder().cliente(cliente).build();
 			return carrinhoMapper.from(carrinhoRepository.salvar(carrinho));
 		}
-		return carrinhoMapper.from(carrinhoSalvo.get());
+		return carrinhoMapper.from(carrinhoValido);
 	}
 
 	@Override

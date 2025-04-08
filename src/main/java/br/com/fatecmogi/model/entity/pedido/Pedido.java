@@ -2,9 +2,11 @@ package br.com.fatecmogi.model.entity.pedido;
 
 import br.com.fatecmogi.model.entity.cartaoCredito.CartaoCredito;
 import br.com.fatecmogi.model.entity.cliente.Cliente;
+import br.com.fatecmogi.model.entity.endereco.EnderecoEntrega;
 import br.com.fatecmogi.model.entity.endereco.EnderecoResidencial;
 import io.quarkus.runtime.annotations.RegisterForReflection;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -26,9 +28,10 @@ public class Pedido {
 
 	private Carrinho carrinho;
 
-	private LocalDate dataPedido;
+	@Builder.Default
+	private LocalDate dataPedido = LocalDate.now();
 
-	private EnderecoResidencial endereco;
+	private EnderecoEntrega endereco;
 
 	private List<CartaoCredito> cartoesCredito;
 

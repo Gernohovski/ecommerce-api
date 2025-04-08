@@ -1,5 +1,6 @@
 package br.com.fatecmogi.repository.table;
 
+import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,7 +13,7 @@ import java.util.List;
 @Table(name = "pedidos")
 @Getter
 @Setter
-public class PanachePedido {
+public class PanachePedido extends PanacheEntityBase {
 
 	@Id
 	@Column(name = "ped_id")
@@ -34,8 +35,8 @@ public class PanachePedido {
 	private BigDecimal valorPedido;
 
 	@ManyToOne
-	@JoinColumn(name = "ers_id")
-	private PanacheEnderecoResidencial endereco;
+	@JoinColumn(name = "eet_id")
+	private PanacheEnderecoEntrega endereco;
 
 	@ManyToMany
 	@JoinTable(name = "pedido_cartao", joinColumns = @JoinColumn(name = "ped_id"),
