@@ -1,0 +1,1 @@
+ALTER TABLE cupons_troca ADD cpt_utilizado BOOLEAN DEFAULT FALSE;

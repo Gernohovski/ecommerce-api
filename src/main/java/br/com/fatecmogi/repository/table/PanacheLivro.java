@@ -4,6 +4,7 @@ import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Formula;
 
 import java.math.BigDecimal;
 import java.util.Set;
@@ -88,6 +89,9 @@ public class PanacheLivro extends PanacheEntityBase {
 	@ManyToOne
 	@JoinColumn(name = "liv_condicao", referencedColumnName = "cnd_id")
 	private PanacheCondicao condicao;
+
+	@Formula("(select (i.ite_quantidade) from itens_estoque i where i.liv_id = liv_id)")
+	private Integer quantidade;
 
 	public void unreferenceDependecies() {
 		this.autor = null;

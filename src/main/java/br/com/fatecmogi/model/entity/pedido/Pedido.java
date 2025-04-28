@@ -3,7 +3,6 @@ package br.com.fatecmogi.model.entity.pedido;
 import br.com.fatecmogi.model.entity.cartaoCredito.CartaoCredito;
 import br.com.fatecmogi.model.entity.cliente.Cliente;
 import br.com.fatecmogi.model.entity.endereco.EnderecoEntrega;
-import br.com.fatecmogi.model.entity.endereco.EnderecoResidencial;
 import io.quarkus.runtime.annotations.RegisterForReflection;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -37,6 +36,10 @@ public class Pedido {
 
 	private BigDecimal valorPedido;
 
+	private BigDecimal valorFrete;
+
 	private Cliente cliente;
+
+	private List<ItemPedido> itensPedido;
 
 }

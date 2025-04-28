@@ -20,7 +20,6 @@ import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.Comparator;
 import java.util.List;
 
 @ApplicationScoped
@@ -56,17 +55,20 @@ public class CarrinhoServiceImpl implements CarrinhoService {
 			var carrinho = Carrinho.builder().itens(List.of(itemCarrinho)).cliente(cliente).build();
 			return carrinhoMapper.from(carrinhoRepository.salvar(carrinho));
 		}
-		var semLivro = carrinhoValido.getItens().stream().noneMatch(item -> item.getLivro().getId()
-				.equals(command.getLivroId()));
-        if (!semLivro) {
-			var itemAdicionado = carrinhoValido.getItens().stream().filter(item -> item.getLivro().getId()
-					.equals(command.getLivroId())).findFirst();
+		var semLivro = carrinhoValido.getItens()
+			.stream()
+			.noneMatch(item -> item.getLivro().getId().equals(command.getLivroId()));
+		if (!semLivro) {
+			var itemAdicionado = carrinhoValido.getItens()
+				.stream()
+				.filter(item -> item.getLivro().getId().equals(command.getLivroId()))
+				.findFirst();
 			if (itemAdicionado.isPresent()) {
 				var item = itemAdicionado.get();
 				return alterarQuantidade(AlterarQuantidadeItemCommand.builder()
-						.itemId(item.getId())
-						.quantidade(item.getQuantidade() + 1)
-						.build());
+					.itemId(item.getId())
+					.quantidade(item.getQuantidade() + 1)
+					.build());
 			}
 		}
 		itemCarrinho.setCarrinho(carrinhoValido);

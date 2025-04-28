@@ -12,10 +12,10 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 public class PaginacaoDTO {
 
-	@QueryParam("pagina")
+	@QueryParam("page")
 	private int page = 0;
 
-	@QueryParam("tamanho")
+	@QueryParam("size")
 	private int size = 10;
 
 }

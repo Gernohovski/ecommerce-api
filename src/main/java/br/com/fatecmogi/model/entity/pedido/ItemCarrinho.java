@@ -22,4 +22,6 @@ public class ItemCarrinho {
 
 	private Integer quantidade;
 
+	private boolean trocaAberta;
+
 }

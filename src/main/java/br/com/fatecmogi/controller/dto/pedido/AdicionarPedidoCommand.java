@@ -1,10 +1,8 @@
 package br.com.fatecmogi.controller.dto.pedido;
 
-import br.com.fatecmogi.model.entity.cartaoCredito.CartaoCredito;
-import br.com.fatecmogi.model.entity.cliente.Cliente;
-import br.com.fatecmogi.model.entity.endereco.EnderecoResidencial;
-import br.com.fatecmogi.model.entity.pedido.Carrinho;
-import br.com.fatecmogi.model.entity.pedido.SituacaoPedido;
+import br.com.fatecmogi.model.entity.cupom.CupomTroca;
+import br.com.fatecmogi.model.entity.pedido.ItemPedido;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,7 +10,6 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.List;
 
 @Data
@@ -35,5 +32,13 @@ public class AdicionarPedidoCommand {
 
 	@NotNull(message = "O identificador único do cliente da compra é obrigatório.")
 	private Long clienteId;
+
+	@NotNull(message = "O valor do frete é obrigatório.")
+	private BigDecimal valorFrete;
+
+	@NotEmpty(message = "Devem haver itens no pedido.")
+	private List<ItemPedido> itensPedido;
+
+	private List<CupomTroca> cuponsTroca;
 
 }

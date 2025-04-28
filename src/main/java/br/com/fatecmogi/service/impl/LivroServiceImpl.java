@@ -43,4 +43,9 @@ public class LivroServiceImpl implements LivroService {
 		return livroRepository.update(livroAtualizado);
 	}
 
+	@Override
+	public Livro buscar(Long id) {
+		return livroRepository.findById(id).orElseThrow(LivroNaoEncontradoException::new);
+	}
+
 }

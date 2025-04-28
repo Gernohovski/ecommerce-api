@@ -54,6 +54,8 @@ public class Livro {
 
 	private BigDecimal valorVenda;
 
+	private Integer quantidade;
+
 	@Builder.Default
 	private boolean ativo = false;
 

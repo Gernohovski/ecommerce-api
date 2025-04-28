@@ -25,4 +25,10 @@ public class CupomController {
 		return Response.status(Response.Status.OK).entity(cupom).build();
 	}
 
+	@GetMapping("/{id}/cupom-troca")
+	public Response buscarCuponsTrocaCliente(@PathVariable("id") Long id) {
+		var cupons = cupomService.buscarCuponsCliente(id);
+		return Response.status(Response.Status.OK).entity(cupons).build();
+	}
+
 }

@@ -28,4 +28,10 @@ public class LivroController {
 		return Response.ok(livroAtualizado).build();
 	}
 
+	@GetMapping("/{id}")
+	public Response buscar(@PathVariable("id") Long id) {
+		var livro = livroService.buscar(id);
+		return Response.ok(livro).build();
+	}
+
 }

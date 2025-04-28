@@ -28,11 +28,17 @@ public class PanachePedido extends PanacheEntityBase {
 	@JoinColumn(name = "car_id")
 	private PanacheCarrinho carrinho;
 
+	@OneToMany(mappedBy = "pedido", cascade = CascadeType.MERGE, orphanRemoval = true)
+	private List<PanacheItemPedido> itensPedido;
+
 	@Column(name = "ped_data_pedido")
 	private LocalDate dataPedido;
 
 	@Column(name = "ped_valor_pedido")
 	private BigDecimal valorPedido;
+
+	@Column(name = "ped_valor_frete")
+	private BigDecimal valorFrete;
 
 	@ManyToOne
 	@JoinColumn(name = "eet_id")
@@ -46,5 +52,15 @@ public class PanachePedido extends PanacheEntityBase {
 	@ManyToOne
 	@JoinColumn(name = "clt_id")
 	private PanacheCliente cliente;
+
+	public void persistDependecies() {
+		if (!this.itensPedido.isEmpty()) {
+			this.itensPedido.forEach(item -> {
+				item.setCarrinho(this.carrinho);
+				item.setPedido(this);
+				item.persist();
+			});
+		}
+	}
 
 }

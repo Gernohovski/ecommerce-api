@@ -13,4 +13,6 @@ public interface LivroService {
 
 	Livro atualizar(Long id, EditarLivroCommand command);
 
+	Livro buscar(Long id);
+
 }

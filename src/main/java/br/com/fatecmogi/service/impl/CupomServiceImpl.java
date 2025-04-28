@@ -4,22 +4,28 @@ import br.com.fatecmogi.controller.dto.cupom.GerarCupomPromocionalCommand;
 import br.com.fatecmogi.controller.exceptionHandler.CommandValidator;
 import br.com.fatecmogi.controller.mapper.CupomPromocionalMapper;
 import br.com.fatecmogi.model.entity.cupom.CupomPromocional;
+import br.com.fatecmogi.model.entity.cupom.CupomTroca;
 import br.com.fatecmogi.model.exception.cupom.CodigoDoCupomJaCadastradoException;
 import br.com.fatecmogi.model.exception.cupom.CupomExpiradoException;
 import br.com.fatecmogi.model.exception.cupom.CupomNaoEncontradoException;
 import br.com.fatecmogi.model.repository.CupomPromocionalRepository;
+import br.com.fatecmogi.model.repository.CupomTrocaRepository;
 import br.com.fatecmogi.service.CupomService;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @ApplicationScoped
 public class CupomServiceImpl implements CupomService {
 
 	@Inject
 	CupomPromocionalRepository cupomPromocionalRepository;
+
+	@Inject
+	CupomTrocaRepository cupomTrocaRepository;
 
 	@Inject
 	CupomPromocionalMapper cupomPromocionalMapper;
@@ -46,6 +52,19 @@ public class CupomServiceImpl implements CupomService {
 			throw new CupomExpiradoException();
 		}
 		return cupom;
+	}
+
+	@Override
+	public List<CupomTroca> buscarCuponsCliente(Long id) {
+		return cupomTrocaRepository.findAllByClienteId(id);
+	}
+
+	@Override
+	public void marcarComoUtilzados(List<CupomTroca> cuponsTroca) {
+		cuponsTroca.forEach(cupom -> {
+			cupom.setUtilizado(true);
+			cupomTrocaRepository.update(cupom);
+		});
 	}
 
 }

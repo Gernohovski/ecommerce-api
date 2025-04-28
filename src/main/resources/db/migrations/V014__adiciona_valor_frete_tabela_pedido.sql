@@ -1,0 +1,1 @@
+ALTER TABLE pedidos ADD ped_valor_frete NUMERIC(10,2);
