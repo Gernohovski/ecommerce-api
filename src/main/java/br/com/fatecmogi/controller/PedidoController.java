@@ -66,4 +66,10 @@ public class PedidoController {
 		return Response.status(Response.Status.OK).entity(cupomTroca).build();
 	}
 
+	@GetMapping("/situacoes")
+	public Response listarSituacoes() {
+		var situacoesPedido = pedidoService.listarSituacoesPedido();
+		return Response.status(Response.Status.OK).entity(situacoesPedido).build();
+	}
+
 }

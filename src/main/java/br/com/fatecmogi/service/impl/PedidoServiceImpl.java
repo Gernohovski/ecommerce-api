@@ -6,12 +6,13 @@ import br.com.fatecmogi.controller.dto.pedido.PedidoFiltroDTO;
 import br.com.fatecmogi.controller.dto.pedido.SolicitarDevolucaoPedidoCommand;
 import br.com.fatecmogi.controller.dto.pedido.SolicitarTrocaPedidoCommand;
 import br.com.fatecmogi.controller.mapper.PedidoMapper;
+import br.com.fatecmogi.controller.mapper.SolicitacaoDevolucaoMapper;
+import br.com.fatecmogi.controller.mapper.SolicitacaoTrocaMapper;
 import br.com.fatecmogi.controller.response.CustomPage;
 import br.com.fatecmogi.model.entity.cupom.CupomTroca;
 import br.com.fatecmogi.model.entity.pedido.Carrinho;
 import br.com.fatecmogi.model.entity.pedido.Pedido;
-import br.com.fatecmogi.model.entity.pedido.SolicitacaoDevolucao;
-import br.com.fatecmogi.model.entity.pedido.SolicitacaoTroca;
+import br.com.fatecmogi.model.entity.pedido.SituacaoPedido;
 import br.com.fatecmogi.model.enums.AcoesSituacaoPedido;
 import br.com.fatecmogi.model.enums.SituacaoDoPedido;
 import br.com.fatecmogi.model.exception.itemCarrinho.CarrinhoNaoEncontradoException;
@@ -23,7 +24,6 @@ import br.com.fatecmogi.model.exception.situacaoPedido.AcaoNaoEncontradaExceptio
 import br.com.fatecmogi.model.exception.solicitacaoTroca.SolicitacaoTrocaNaoEcontradaException;
 import br.com.fatecmogi.model.repository.*;
 import br.com.fatecmogi.service.CupomService;
-import br.com.fatecmogi.service.CupomTrocaService;
 import br.com.fatecmogi.service.EstoqueService;
 import br.com.fatecmogi.service.PedidoService;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -32,7 +32,6 @@ import jakarta.transaction.Transactional;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 @ApplicationScoped
 public class PedidoServiceImpl implements PedidoService {
@@ -47,6 +46,9 @@ public class PedidoServiceImpl implements PedidoService {
 	LivroRepository livroRepository;
 
 	@Inject
+	SituacaoPedidoRepository situacaoPedidoRepository;
+
+	@Inject
 	PedidoMapper pedidoMapper;
 
 	@Inject
@@ -59,10 +61,13 @@ public class PedidoServiceImpl implements PedidoService {
 	SolicitacaoDevolucaoRepository solicitacaoDevolucaoRepository;
 
 	@Inject
-	CupomTrocaService cupomTrocaService;
+	CupomService cupomService;
 
 	@Inject
-	CupomService cupomService;
+	SolicitacaoTrocaMapper solicitacaoTrocaMapper;
+
+	@Inject
+	SolicitacaoDevolucaoMapper solicitacaoDevolucaoMapper;
 
 	@Override
 	@Transactional
@@ -111,20 +116,20 @@ public class PedidoServiceImpl implements PedidoService {
 			throw new AcaoNaoEncontradaException();
 		}
 		if (acao.equals("Adicionar ao estoque")) {
-			if(pedido.getSituacaoPedido().getNome().equals(SituacaoDoPedido.TROCA_RECEBIDA.getSituacao())) {
+			if (pedido.getSituacaoPedido().getNome().equals(SituacaoDoPedido.TROCA_RECEBIDA.getSituacao())) {
 				darEntradaProdutoTroca(id);
 				acaoSituacaoPedido = AcoesSituacaoPedido.ADICIONAR_AO_ESTOQUE;
 			}
-			if(pedido.getSituacaoPedido().getNome().equals(SituacaoDoPedido.DEVOLUCAO_RECEBIDA.getSituacao())) {
+			if (pedido.getSituacaoPedido().getNome().equals(SituacaoDoPedido.DEVOLUCAO_RECEBIDA.getSituacao())) {
 				darEntradaProdutoDevolucao(id);
 				acaoSituacaoPedido = AcoesSituacaoPedido.ADICIONAR_DEVOLUCAO_AO_ESTOQUE;
 			}
 		}
 		if (acao.equals("Descartar")) {
-			if(pedido.getSituacaoPedido().getNome().equals(SituacaoDoPedido.TROCA_RECEBIDA.getSituacao())) {
+			if (pedido.getSituacaoPedido().getNome().equals(SituacaoDoPedido.TROCA_RECEBIDA.getSituacao())) {
 				acaoSituacaoPedido = AcoesSituacaoPedido.DESCARTAR;
 			}
-			if(pedido.getSituacaoPedido().getNome().equals(SituacaoDoPedido.DEVOLUCAO_RECEBIDA.getSituacao())) {
+			if (pedido.getSituacaoPedido().getNome().equals(SituacaoDoPedido.DEVOLUCAO_RECEBIDA.getSituacao())) {
 				acaoSituacaoPedido = AcoesSituacaoPedido.DESCARTAR_DEVOLUCAO;
 			}
 		}
@@ -134,29 +139,21 @@ public class PedidoServiceImpl implements PedidoService {
 	@Override
 	@Transactional
 	public Pedido solicitarTroca(SolicitarTrocaPedidoCommand command) {
-		var pedido = pedidoRepository.findById(command.getId()).orElseThrow(PedidoNaoEncontradoException::new);
-		var itensPedido = pedido.getItensPedido()
-			.stream()
-			.filter(itemPedido -> command.getItensId()
-				.stream()
-				.anyMatch(itemId -> itemPedido.getId().equals(Long.valueOf(itemId))))
-			.collect(Collectors.toSet());
-		solicitacaoTrocaRepository.save(SolicitacaoTroca.builder().pedido(pedido).itensPedido(itensPedido).build());
-		return this.alterarSituacao(command.getId(), AcoesSituacaoPedido.SOLICITAR_TROCA.getAcao());
+		var pedido = pedidoRepository.findById(command.getPedidoId()).orElseThrow(PedidoNaoEncontradoException::new);
+		var solicitacaoTroca = solicitacaoTrocaMapper.from(command);
+		solicitacaoTroca.setPedido(pedido);
+		solicitacaoTrocaRepository.save(solicitacaoTroca);
+		return this.alterarSituacao(command.getPedidoId(), AcoesSituacaoPedido.SOLICITAR_TROCA.getAcao());
 	}
 
 	@Override
 	@Transactional
 	public Pedido solicitarDevolucao(SolicitarDevolucaoPedidoCommand command) {
-		var pedido = pedidoRepository.findById(command.getId()).orElseThrow(PedidoNaoEncontradoException::new);
-		var itensPedido = pedido.getItensPedido()
-				.stream()
-				.filter(itemPedido -> command.getItensId()
-						.stream()
-						.anyMatch(itemId -> itemPedido.getId().equals(Long.valueOf(itemId))))
-				.collect(Collectors.toSet());
-		solicitacaoDevolucaoRepository.save(SolicitacaoDevolucao.builder().pedido(pedido).itensPedido(itensPedido).build());
-		return this.alterarSituacao(command.getId(), AcoesSituacaoPedido.SOLICITAR_DEVOLUCAO.getAcao());
+		var pedido = pedidoRepository.findById(command.getPedidoId()).orElseThrow(PedidoNaoEncontradoException::new);
+		var solicitarDevolucao = solicitacaoDevolucaoMapper.from(command);
+		solicitarDevolucao.setPedido(pedido);
+		solicitacaoDevolucaoRepository.save(solicitarDevolucao);
+		return this.alterarSituacao(command.getPedidoId(), AcoesSituacaoPedido.SOLICITAR_DEVOLUCAO.getAcao());
 	}
 
 	@Override
@@ -164,9 +161,14 @@ public class PedidoServiceImpl implements PedidoService {
 	public CupomTroca aprovarTroca(Long id) {
 		var solicitacaoTroca = solicitacaoTrocaRepository.findByPedidoId(id)
 			.orElseThrow(SolicitacaoTrocaNaoEcontradaException::new);
-		var cupom = cupomTrocaService.gerarCupomTroca(solicitacaoTroca);
+		var cupom = cupomService.gerarCupomTroca(solicitacaoTroca);
 		alterarSituacao(id, "Aprovar troca");
 		return cupom;
+	}
+
+	@Override
+	public List<SituacaoPedido> listarSituacoesPedido() {
+		return situacaoPedidoRepository.listarTodas();
 	}
 
 	private void validarDisponibilidadeEmEstoque(Long id) {
@@ -205,17 +207,17 @@ public class PedidoServiceImpl implements PedidoService {
 	private void darEntradaProdutoTroca(Long pedidoId) {
 		var solicitacaoTroca = solicitacaoTrocaRepository.findByPedidoId(pedidoId)
 			.orElseThrow(SolicitacaoTrocaNaoEcontradaException::new);
-		var itensEstoque = solicitacaoTroca.getItensPedido()
+		var itensEstoque = solicitacaoTroca.getItem()
 			.stream()
-			.map(item -> estoqueService.obterPorLivroId(item.getLivro().getId()))
+			.map(item -> estoqueService.obterPorLivroId(item.getItemPedido().getLivro().getId()))
 			.toList();
 		itensEstoque.forEach(itemEstoque -> {
-			var itemCorrespondente = solicitacaoTroca.getItensPedido()
+			var itemCorrespondente = solicitacaoTroca.getItem()
 				.stream()
-				.filter(item -> item.getLivro().getId().equals(itemEstoque.getLivro().getId()))
+				.filter(item -> item.getItemPedido().getLivro().getId().equals(itemEstoque.getLivro().getId()))
 				.findFirst();
 			itemCorrespondente.ifPresent(item -> {
-				itemEstoque.setQuantidade(itemEstoque.getQuantidade() + item.getQuantidade());
+				itemEstoque.setQuantidade(itemEstoque.getQuantidade() + item.getItemPedido().getQuantidade());
 				estoqueService.darEntrada(itemEstoque);
 			});
 		});
@@ -223,16 +225,16 @@ public class PedidoServiceImpl implements PedidoService {
 
 	private void darEntradaProdutoDevolucao(Long pedidoId) {
 		var solicitacaoDevolucao = solicitacaoDevolucaoRepository.findByPedidoId(pedidoId)
-				.orElseThrow(SolicitacaoTrocaNaoEcontradaException::new);
-		var itensEstoque = solicitacaoDevolucao.getItensPedido()
-				.stream()
-				.map(item -> estoqueService.obterPorLivroId(item.getLivro().getId()))
-				.toList();
+			.orElseThrow(SolicitacaoTrocaNaoEcontradaException::new);
+		var itensEstoque = solicitacaoDevolucao.getItem()
+			.stream()
+			.map(item -> estoqueService.obterPorLivroId(item.getItemPedido().getLivro().getId()))
+			.toList();
 		itensEstoque.forEach(itemEstoque -> {
-			var itemCorrespondente = solicitacaoDevolucao.getItensPedido()
-					.stream()
-					.filter(item -> item.getLivro().getId().equals(itemEstoque.getLivro().getId()))
-					.findFirst();
+			var itemCorrespondente = solicitacaoDevolucao.getItem()
+				.stream()
+				.filter(item -> item.getItemPedido().getLivro().getId().equals(itemEstoque.getLivro().getId()))
+				.findFirst();
 			itemCorrespondente.ifPresent(item -> {
 				itemEstoque.setQuantidade(itemEstoque.getQuantidade() + item.getQuantidade());
 				estoqueService.darEntrada(itemEstoque);

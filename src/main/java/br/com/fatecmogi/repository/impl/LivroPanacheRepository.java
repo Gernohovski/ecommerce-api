@@ -2,6 +2,7 @@ package br.com.fatecmogi.repository.impl;
 
 import br.com.fatecmogi.controller.dto.livro.LivroFiltroDTO;
 import br.com.fatecmogi.controller.dto.paginacao.PaginacaoDTO;
+import br.com.fatecmogi.controller.response.CustomPage;
 import br.com.fatecmogi.model.entity.livro.Livro;
 import br.com.fatecmogi.model.repository.LivroRepository;
 import br.com.fatecmogi.repository.mapper.PanacheLivroMapper;
@@ -26,15 +27,10 @@ public class LivroPanacheRepository implements LivroRepository {
 	PanacheLivroMapper panacheLivroMapper;
 
 	@Override
-	public List<Livro> findAll(LivroFiltroDTO filtro, PaginacaoDTO paginacao) {
-		String cacheKey = gerarChaveCache(filtro, paginacao);
-		// List<Livro> livrosCacheados = redisService.buscarLivrosNoCache(cacheKey);
-		// if (livrosCacheados != null) {
-		// return livrosCacheados;
-		// }
+	public CustomPage<Livro> findAll(LivroFiltroDTO filtro, PaginacaoDTO paginacao) {
 		List<Livro> livros = panacheLivroMapper.from(filtrarLivros(filtro, paginacao));
-		// redisService.salvarLivrosNoCache(cacheKey, livros);
-		return livros;
+		Long total = PanacheLivro.findAll().count();
+		return CustomPage.<Livro>builder().content(livros).count(total.intValue()).build();
 	}
 
 	@Override
@@ -55,9 +51,15 @@ public class LivroPanacheRepository implements LivroRepository {
 		return Optional.of(panacheLivroMapper.from(panacheLivro));
 	}
 
+	@Override
+	public List<Livro> findAll() {
+		List<PanacheLivro> panacheLivros = PanacheLivro.findAll().list();
+		return panacheLivroMapper.from(panacheLivros);
+	}
+
 	public List<PanacheLivro> filtrarLivros(LivroFiltroDTO filtro, PaginacaoDTO paginacao) {
 		StringBuilder query = new StringBuilder(
-				"SELECT l FROM PanacheLivro l JOIN l.categorias c JOIN l.idioma i WHERE 1=1");
+				"SELECT DISTINCT l FROM PanacheLivro l JOIN l.categorias c JOIN l.idioma i WHERE 1=1");
 		Map<String, Object> params = new HashMap<>();
 		if (filtro.categoriaId != null) {
 			query.append(" AND c.id = :categoriaId");

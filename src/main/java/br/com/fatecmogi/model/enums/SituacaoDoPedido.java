@@ -7,8 +7,9 @@ public enum SituacaoDoPedido {
 	PEDIDO_NAO_ENTREGUE("pedido-nao-entregue"), PEDIDO_RECEBIDO("pedido-recebido"),
 	PEDIDO_FINALIZADO("pedido-finalizado"), SOLICITACAO_DE_TROCA("solicitacao-de-troca"),
 	TROCA_APROVADA("troca-aprovada"), TROCA_RECUSADA("troca-recusada"), TROCA_RECEBIDA("troca-recebida"),
-	TROCA_FINALIZADA("troca-finalizada"), SOLICITACAO_DEVOLUCAO("devolucao-solicitada"), DEVOLUCAO_APROVADA("devolucao-aprovada"),
-	DEVOLUCAO_RECUSADA("devolucao-recusada"), DEVOLUCAO_RECEBIDA("devolucao-recebida"), DEVOLUCAO_FINALIZADA("devolucao-finalizada");
+	TROCA_FINALIZADA("troca-finalizada"), SOLICITACAO_DEVOLUCAO("devolucao-solicitada"),
+	DEVOLUCAO_APROVADA("devolucao-aprovada"), DEVOLUCAO_RECUSADA("devolucao-recusada"),
+	DEVOLUCAO_RECEBIDA("devolucao-recebida"), DEVOLUCAO_FINALIZADA("devolucao-finalizada");
 
 	private final String situacao;
 

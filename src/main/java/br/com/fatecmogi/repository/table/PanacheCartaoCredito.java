@@ -36,6 +36,9 @@ public class PanacheCartaoCredito extends PanacheEntityBase {
 	@JoinColumn(name = "crc_clt_id", referencedColumnName = "clt_id")
 	private PanacheCliente cliente;
 
+	@Column(name = "crc_temporario")
+	private boolean temporario;
+
 	public void unreferrenceDependecies() {
 		this.bandeira = null;
 	}

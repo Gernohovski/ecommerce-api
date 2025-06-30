@@ -30,4 +30,8 @@ public class ItemPedido {
 
 	private BigDecimal valor;
 
+	private Integer quantidadeDevolucao;
+
+	private Integer quantidadeTroca;
+
 }

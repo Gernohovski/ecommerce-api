@@ -2,6 +2,7 @@ package br.com.fatecmogi.repository.impl;
 
 import br.com.fatecmogi.controller.dto.paginacao.PaginacaoDTO;
 import br.com.fatecmogi.controller.dto.pedido.PedidoFiltroDTO;
+import br.com.fatecmogi.controller.dto.vendas.VendasPorCategoriaDTO;
 import br.com.fatecmogi.controller.response.CustomPage;
 import br.com.fatecmogi.model.entity.pedido.Pedido;
 import br.com.fatecmogi.model.enums.SituacaoDoPedido;
@@ -12,8 +13,12 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
+
+import static io.quarkus.hibernate.orm.panache.PanacheEntityBase.getEntityManager;
 
 @ApplicationScoped
 public class PedidoPanacheRepository implements PedidoRepository {
@@ -68,9 +73,10 @@ public class PedidoPanacheRepository implements PedidoRepository {
 
 		Long total;
 
-		if(filtro.clienteId != null) {
+		if (filtro.clienteId != null) {
 			total = PanachePedido.find("cliente.id", filtro.clienteId).count();
-		} else {
+		}
+		else {
 			total = PanachePedido.findAll().count();
 		}
 
@@ -97,9 +103,54 @@ public class PedidoPanacheRepository implements PedidoRepository {
 		PanacheSituacaoPedido panacheSituacaoPedido = PanacheSituacaoPedido.find("nome", situacaoDoPedido.getSituacao())
 			.firstResult();
 		panachePedido.setSituacaoPedido(panacheSituacaoPedido);
+		panachePedido.setDataAlteracao(LocalDateTime.now());
 		EntityManager entityManager = PanachePedido.getEntityManager();
 		entityManager.merge(panachePedido);
 		return panachePedidoMapper.from(panachePedido);
+	}
+
+	@Override
+	public List<VendasPorCategoriaDTO> buscarVendasPorPeriodo(LocalDate inicio, LocalDate fim,
+			List<String> categoriaIds) {
+
+		StringBuilder jpql = new StringBuilder("""
+				    SELECT
+				        FUNCTION('TO_CHAR', p.dataPedido, 'YYYY-MM'),
+				        c.id,
+				        c.nome,
+				        SUM(ip.quantidade)
+				    FROM PanachePedido   p
+				    JOIN p.itensPedido   ip
+				    JOIN ip.livro        l
+				    JOIN l.categorias    c
+				    WHERE p.dataPedido BETWEEN :inicio AND :fim
+				""");
+
+		if (categoriaIds != null && !categoriaIds.isEmpty()) {
+			jpql.append(" AND c.id IN :catIds");
+		}
+
+		jpql.append("""
+				    GROUP BY FUNCTION('TO_CHAR', p.dataPedido, 'YYYY-MM'), c.id, c.nome
+				    ORDER BY FUNCTION('TO_CHAR', p.dataPedido, 'YYYY-MM'), c.nome
+				""");
+
+		EntityManager em = PanachePedido.getEntityManager();
+		var query = em.createQuery(jpql.toString());
+
+		query.setParameter("inicio", inicio);
+		query.setParameter("fim", fim);
+
+		if (categoriaIds != null && !categoriaIds.isEmpty()) {
+			List<Long> catIdsLong = categoriaIds.stream().map(Long::valueOf).toList();
+			query.setParameter("catIds", catIdsLong);
+		}
+
+		List<Object[]> resultados = query.getResultList();
+
+		return resultados.stream()
+			.map(obj -> new VendasPorCategoriaDTO((String) obj[0], (Long) obj[1], (String) obj[2], (Long) obj[3]))
+			.toList();
 	}
 
 }

@@ -28,4 +28,6 @@ public class CadastrarCartaoCreditoClienteCommand {
 	@NotNull(message = "O cliente do cartão de crédito é obrigatório.")
 	private Long clienteId;
 
+	private boolean temporario;
+
 }

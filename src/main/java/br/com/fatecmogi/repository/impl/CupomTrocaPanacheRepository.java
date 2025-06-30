@@ -25,8 +25,8 @@ public class CupomTrocaPanacheRepository implements CupomTrocaRepository {
 
 	@Override
 	public List<CupomTroca> findAllByClienteId(Long id) {
-		List<PanacheCupomTroca> panacheCupomTroca = PanacheCupomTroca.
-				find("cliente.id = ?1 and utilizado = false", id).list();
+		List<PanacheCupomTroca> panacheCupomTroca = PanacheCupomTroca.find("cliente.id = ?1 and utilizado = false", id)
+			.list();
 		return panacheCupomTrocaMapper.from(panacheCupomTroca);
 	}
 

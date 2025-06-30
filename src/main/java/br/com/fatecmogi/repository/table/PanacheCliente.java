@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -43,6 +44,9 @@ public class PanacheCliente extends PanacheEntityBase {
 
 	@Column(name = "clt_ativo")
 	private boolean ativo;
+
+	@Column(name = "clt_data_cadastro")
+	private LocalDateTime dataCadastro;
 
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "clt_tlf_id", referencedColumnName = "tlf_id")

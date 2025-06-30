@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -33,6 +34,9 @@ public class PanachePedido extends PanacheEntityBase {
 
 	@Column(name = "ped_data_pedido")
 	private LocalDate dataPedido;
+
+	@Column(name = "ped_data_alteracao")
+	private LocalDateTime dataAlteracao;
 
 	@Column(name = "ped_valor_pedido")
 	private BigDecimal valorPedido;

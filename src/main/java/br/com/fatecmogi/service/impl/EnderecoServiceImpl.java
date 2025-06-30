@@ -72,6 +72,7 @@ public class EnderecoServiceImpl implements EnderecoService {
 		endereco.setCliente(cliente);
 		endereco.setTipoLogradouro(tipoLogradouro);
 		endereco.setTipoResidencia(tipoResidencia);
+		endereco.setTemporario(command.isTemporario());
 		return enderecoRepository.save(endereco);
 	}
 

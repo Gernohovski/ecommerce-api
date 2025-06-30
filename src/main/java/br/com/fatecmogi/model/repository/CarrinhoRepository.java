@@ -15,4 +15,6 @@ public interface CarrinhoRepository {
 
 	Optional<Carrinho> buscar(Long id);
 
+	List<Carrinho> getValid();
+
 }

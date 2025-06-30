@@ -15,11 +15,10 @@ import java.util.Set;
 @RegisterForReflection
 public class SolicitacaoDevolucao {
 
-    private Long id;
+	private Long id;
 
-    private Set<ItemPedido> itensPedido;
+	private Set<ItemDevolucao> item;
 
-    private Pedido pedido;
-
+	private Pedido pedido;
 
 }

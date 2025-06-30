@@ -36,4 +36,6 @@ public class Endereco {
 
 	private Cliente cliente;
 
+	private boolean temporario;
+
 }

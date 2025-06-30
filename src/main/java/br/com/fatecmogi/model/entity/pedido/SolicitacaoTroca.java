@@ -17,7 +17,7 @@ public class SolicitacaoTroca {
 
 	private Long id;
 
-	private Set<ItemPedido> itensPedido;
+	private Set<ItemTroca> item;
 
 	private Pedido pedido;
 

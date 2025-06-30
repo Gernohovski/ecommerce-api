@@ -1,5 +1,6 @@
 package br.com.fatecmogi.controller.dto.pedido;
 
+import br.com.fatecmogi.model.entity.pedido.ItemTroca;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,8 +14,8 @@ import java.util.List;
 @NoArgsConstructor
 public class SolicitarTrocaPedidoCommand {
 
-	private Long id;
+	private Long pedidoId;
 
-	private List<String> itensId;
+	private List<ItemTroca> item;
 
 }

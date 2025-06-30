@@ -30,4 +30,6 @@ public class CartaoCredito {
 
 	private Cliente cliente;
 
+	private boolean temporario;
+
 }

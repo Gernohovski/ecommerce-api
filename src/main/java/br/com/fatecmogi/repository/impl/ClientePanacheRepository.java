@@ -10,10 +10,14 @@ import br.com.fatecmogi.repository.table.PanacheTelefone;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+
+import static io.quarkus.hibernate.orm.panache.Panache.getEntityManager;
 
 @ApplicationScoped
 public class ClientePanacheRepository implements ClienteRepository {
@@ -138,6 +142,16 @@ public class ClientePanacheRepository implements ClienteRepository {
 			return Optional.empty();
 		}
 		return Optional.of(panacheClienteMapper.from(panacheCliente));
+	}
+
+	@Override
+	public Long buscarVendasPorPeriodo(LocalDateTime dataInicio, LocalDateTime dataFim) {
+		return getEntityManager().createQuery("""
+				    SELECT COUNT(c)
+				    FROM PanacheCliente c
+				    WHERE c.dataCadastro BETWEEN :inicio AND :fim
+				""", Long.class).setParameter("inicio", dataInicio).setParameter("fim", dataFim).getSingleResult();
+
 	}
 
 }

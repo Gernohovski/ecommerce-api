@@ -5,9 +5,12 @@ import br.com.fatecmogi.controller.exceptionHandler.CommandValidator;
 import br.com.fatecmogi.controller.mapper.CupomPromocionalMapper;
 import br.com.fatecmogi.model.entity.cupom.CupomPromocional;
 import br.com.fatecmogi.model.entity.cupom.CupomTroca;
+import br.com.fatecmogi.model.entity.pedido.SolicitacaoTroca;
+import br.com.fatecmogi.model.exception.cliente.ClienteNaoEncontratoException;
 import br.com.fatecmogi.model.exception.cupom.CodigoDoCupomJaCadastradoException;
 import br.com.fatecmogi.model.exception.cupom.CupomExpiradoException;
 import br.com.fatecmogi.model.exception.cupom.CupomNaoEncontradoException;
+import br.com.fatecmogi.model.repository.ClienteRepository;
 import br.com.fatecmogi.model.repository.CupomPromocionalRepository;
 import br.com.fatecmogi.model.repository.CupomTrocaRepository;
 import br.com.fatecmogi.service.CupomService;
@@ -15,6 +18,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -29,6 +33,9 @@ public class CupomServiceImpl implements CupomService {
 
 	@Inject
 	CupomPromocionalMapper cupomPromocionalMapper;
+
+	@Inject
+	ClienteRepository clienteRepository;
 
 	@Inject
 	CommandValidator commandValidator;
@@ -65,6 +72,19 @@ public class CupomServiceImpl implements CupomService {
 			cupom.setUtilizado(true);
 			cupomTrocaRepository.update(cupom);
 		});
+	}
+
+	@Override
+	public CupomTroca gerarCupomTroca(SolicitacaoTroca solicitacaoTroca) {
+		var valor = solicitacaoTroca.getItem()
+			.stream()
+			.map(item -> item.getItemPedido().getValor())
+			.reduce(BigDecimal.ZERO, BigDecimal::add);
+		var clienteId = solicitacaoTroca.getPedido().getCliente().getId();
+		var cliente = clienteRepository.findById(clienteId).orElseThrow(ClienteNaoEncontratoException::new);
+		var cupom = CupomTroca.builder().valorDesconto(valor).cliente(cliente).build();
+		cupom.gerarCodigo();
+		return cupomTrocaRepository.save(cupom);
 	}
 
 }

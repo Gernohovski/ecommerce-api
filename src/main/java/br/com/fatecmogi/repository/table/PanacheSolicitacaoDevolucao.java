@@ -13,18 +13,26 @@ import java.util.Set;
 @Setter
 public class PanacheSolicitacaoDevolucao extends PanacheEntityBase {
 
-    @Id
-    @Column(name = "std_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	@Column(name = "std_id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @ManyToMany
-    @JoinTable(name = "itens_pedido_solicitacao_devolucao", joinColumns = @JoinColumn(name = "std_id"),
-            inverseJoinColumns = @JoinColumn(name = "itp_id"))
-    private Set<PanacheItemPedido> itensPedido;
+	@OneToMany(cascade = CascadeType.PERSIST)
+	@JoinTable(name = "itens_devolucao_solicitacao_devolucao", joinColumns = @JoinColumn(name = "std_id"),
+			inverseJoinColumns = @JoinColumn(name = "itd_id"))
+	private Set<PanacheItemDevolucao> item;
 
-    @ManyToOne
-    @JoinColumn(name = "ped_id")
-    private PanachePedido pedido;
+	@ManyToOne
+	@JoinColumn(name = "ped_id")
+	private PanachePedido pedido;
+
+	public void persistDependencies() {
+		for (PanacheItemDevolucao itemDevolucao : this.item) {
+			if (itemDevolucao.getId() == null) {
+				PanacheItemDevolucao.persist(this.item);
+			}
+		}
+	}
 
 }

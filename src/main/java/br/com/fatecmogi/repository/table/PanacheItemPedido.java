@@ -37,12 +37,21 @@ public class PanacheItemPedido extends PanacheEntityBase {
 	@JoinColumn(name = "ped_id")
 	private PanachePedido pedido;
 
-	@Formula("(select case when count(st.stc_id) > 0 then true else false end "
-			+ "from itens_pedido_solicitacao_troca st " + "where st.itp_id = itp_id)")
+	@Formula("(SELECT CASE WHEN EXISTS (SELECT 1 FROM itens_troca it "
+			+ "JOIN itens_troca_solicitacao_troca itst ON it.ita_id = itst.ita_id "
+			+ "JOIN solicitacoes_troca st ON itst.stc_id = st.stc_id " + "WHERE it.itp_id = itp_id) THEN 1 ELSE 0 END)")
 	private boolean trocaAberta;
 
-	@Formula("(select case when count(st.std_id) > 0 then true else false end "
-			+ "from itens_pedido_solicitacao_devolucao st " + "where st.itp_id = itp_id)")
+	@Formula("(SELECT CASE WHEN EXISTS (SELECT 1 FROM itens_devolucao it "
+			+ "JOIN itens_devolucao_solicitacao_devolucao itst ON it.itd_id = itst.itd_id "
+			+ "JOIN solicitacoes_devolucao st ON itst.std_id = st.std_id "
+			+ "WHERE it.itp_id = itp_id) THEN 1 ELSE 0 END)")
 	private boolean devolucaoAberta;
+
+	@Formula("(SELECT it.ita_quantidade " + "FROM itens_troca it " + "WHERE it.itp_id = itp_id)")
+	private Integer quantidadeTroca;
+
+	@Formula("(SELECT it.itd_quantidade " + "FROM itens_devolucao it " + "WHERE it.itp_id = itp_id)")
+	private Integer quantidadeDevolucao;
 
 }

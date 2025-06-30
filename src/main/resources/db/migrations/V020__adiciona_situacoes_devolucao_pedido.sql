@@ -5,6 +5,15 @@ INSERT INTO situacoes_pedido (stp_nome) VALUES
 ('devolucao-recebida'),
 ('devolucao-finalizada');
 
+CREATE TABLE itens_devolucao (
+    itd_id BIGSERIAL PRIMARY KEY,
+    itd_quantidade INTEGER,
+    itp_id BIGINT,
+        CONSTRAINT fk_itens_devolucao_itens_pedido
+            FOREIGN KEY (itp_id)
+            REFERENCES itens_pedido (itp_id)
+);
+
 CREATE TABLE solicitacoes_devolucao (
     std_id BIGSERIAL PRIMARY KEY,
     ped_id BIGINT,
@@ -13,16 +22,16 @@ CREATE TABLE solicitacoes_devolucao (
         REFERENCES pedidos (ped_id)
 );
 
-CREATE TABLE itens_pedido_solicitacao_devolucao (
+CREATE TABLE itens_devolucao_solicitacao_devolucao (
     std_id BIGINT NOT NULL,
-    itp_id BIGINT NOT NULL,
-    PRIMARY KEY (std_id, itp_id),
+    itd_id BIGINT NOT NULL,
+    PRIMARY KEY (std_id, itd_id),
     CONSTRAINT fk_icst_solicitacao
         FOREIGN KEY (std_id)
         REFERENCES solicitacoes_devolucao (std_id),
-    CONSTRAINT fk_icst_item_pedido
-        FOREIGN KEY (itp_id)
-        REFERENCES itens_pedido (itp_id)
+    CONSTRAINT fk_icst_item_devolucao
+        FOREIGN KEY (itd_id)
+        REFERENCES itens_devolucao (itd_id)
 );
 
 

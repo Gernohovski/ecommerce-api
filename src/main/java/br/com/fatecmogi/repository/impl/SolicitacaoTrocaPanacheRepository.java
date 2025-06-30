@@ -18,6 +18,7 @@ public class SolicitacaoTrocaPanacheRepository implements SolicitacaoTrocaReposi
 	@Override
 	public void save(SolicitacaoTroca solicitacaoTroca) {
 		PanacheSolicitacaoTroca panacheSolicitacaoTroca = panacheSolicitacaoTrocaMapper.from(solicitacaoTroca);
+		panacheSolicitacaoTroca.persistDependencies();
 		panacheSolicitacaoTroca.persist();
 	}
 

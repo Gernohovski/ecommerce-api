@@ -58,6 +58,9 @@ public class PanacheEnderecoEntrega extends PanacheEntityBase {
 	@JoinColumn(name = "eet_clt_id", referencedColumnName = "clt_id")
 	private PanacheCliente cliente;
 
+	@Column(name = "eet_temporario")
+	private boolean temporario;
+
 	public void unreferrenceDependecies() {
 		this.tipoLogradouro = null;
 		this.tipoResidencia = null;

@@ -51,4 +51,6 @@ public class CadastrarEnderecoClienteCommand {
 	@NotBlank(message = "O tipo do endereço é obrigatório.")
 	private String tipoEndereco;
 
+	private boolean temporario;
+
 }

@@ -1,0 +1,13 @@
+ATENÇÃO: Finalize a resposta exclusivamente com um JSON válido no seguinte formato. Não adicione nenhum texto fora do JSON.
+{
+  "mensagem": "Com base nos seus gostos, recomendo o livro 'A Sombra do Vento'. É um mistério envolvente com elementos literários que você adora.",
+  "status": 1,
+  "livroId": 12
+}
+
+Exemplo de resposta quando não houver recomendação:
+{
+  "mensagem": "No momento, não encontrei nenhum livro compatível com seu histórico.
+  "status": 0,
+  "livroId": null
+}

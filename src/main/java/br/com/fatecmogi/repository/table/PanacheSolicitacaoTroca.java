@@ -18,13 +18,22 @@ public class PanacheSolicitacaoTroca extends PanacheEntityBase {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@ManyToMany
-	@JoinTable(name = "itens_pedido_solicitacao_troca", joinColumns = @JoinColumn(name = "stc_id"),
-			inverseJoinColumns = @JoinColumn(name = "itp_id"))
-	private Set<PanacheItemPedido> itensPedido;
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinTable(name = "itens_troca_solicitacao_troca", joinColumns = @JoinColumn(name = "stc_id"),
+			inverseJoinColumns = @JoinColumn(name = "ita_id"))
+	private Set<PanacheItemTroca> item;
 
 	@ManyToOne
 	@JoinColumn(name = "ped_id")
 	private PanachePedido pedido;
+
+	public void persistDependencies() {
+		for (PanacheItemTroca itemTroca : this.item) {
+			if (itemTroca.getId() == null) {
+				itemTroca.persistAndFlush();
+			}
+		}
+		PanacheItemTroca.flush();
+	}
 
 }

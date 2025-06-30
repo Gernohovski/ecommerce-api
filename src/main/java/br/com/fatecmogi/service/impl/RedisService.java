@@ -10,6 +10,7 @@ import io.quarkus.redis.datasource.value.ValueCommands;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -47,7 +48,7 @@ public class RedisService {
 			countCommands.set(cacheKey, json);
 		}
 		catch (Exception e) {
-			e.printStackTrace();
+			Log.error("Erro ao cachear os livros");
 		}
 	}
 
@@ -59,10 +60,41 @@ public class RedisService {
 				return Arrays.asList(objectMapper.readValue(cacheData, Livro[].class));
 			}
 			catch (Exception e) {
-				Log.error("Erro ao cachear os livros");
+				Log.error("Erro ao buscar os livros no cache");
 			}
 		}
 		return null;
+	}
+
+	public void salvarMensagemNoHistorico(Long clienteId, List<String> mensagens) {
+		try {
+			ObjectMapper mapper = new ObjectMapper();
+			String json = mapper.writeValueAsString(mensagens);
+			this.set("conversa:" + clienteId, json);
+		}
+		catch (Exception ignored) {
+			Log.error("Erro ao salvar histórico do usuário");
+		}
+	}
+
+	public List<String> getHistorico(Long clienteId) {
+		String json = this.get("conversa:" + clienteId);
+		if (json == null)
+			return new ArrayList<>();
+		try {
+			ObjectMapper mapper = new ObjectMapper();
+			String[] mensagens = mapper.readValue(json, String[].class);
+			return mensagens != null ? new ArrayList<>(Arrays.asList(mensagens)) : new ArrayList<>();
+		}
+		catch (Exception e) {
+			Log.error("Erro ao buscar histórico do usuário");
+			return new ArrayList<>();
+		}
+	}
+
+	public void deletarHistoricoCliente(Long clienteId) {
+		this.delete("conversa:" + clienteId);
+		Log.info("Histórico do usuário apagado com sucesso");
 	}
 
 }

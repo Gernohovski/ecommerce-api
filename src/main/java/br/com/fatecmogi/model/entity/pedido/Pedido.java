@@ -12,6 +12,7 @@ import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -29,6 +30,8 @@ public class Pedido {
 
 	@Builder.Default
 	private LocalDate dataPedido = LocalDate.now();
+
+	private LocalDateTime dataAlteracao;
 
 	private EnderecoEntrega endereco;
 

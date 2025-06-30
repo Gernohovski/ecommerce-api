@@ -7,6 +7,7 @@ import br.com.fatecmogi.repository.table.PanacheCarrinho;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -52,6 +53,15 @@ public class CarrinhoPanacheRepository implements CarrinhoRepository {
 			return Optional.empty();
 		}
 		return Optional.of(panacheCarrinhoMapper.from(panacheCarrinho));
+	}
+
+	@Override
+	public List<Carrinho> getValid() {
+		List<PanacheCarrinho> panacheCarrinhos = PanacheCarrinho.findAll().list();
+		var carrinhosValidos = panacheCarrinhos.stream()
+			.filter(panacheCarrinho -> panacheCarrinho.getDataExpiracao().isAfter(LocalDateTime.now()))
+			.toList();
+		return panacheCarrinhoMapper.from(carrinhosValidos);
 	}
 
 }

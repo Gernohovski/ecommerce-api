@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -41,6 +42,9 @@ public class Cliente {
 
 	@Builder.Default
 	private boolean ativo = true;
+
+	@Builder.Default
+	private LocalDateTime dataCadastro = LocalDateTime.now();
 
 	private List<EnderecoResidencial> enderecoResidencial;
 

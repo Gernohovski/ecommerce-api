@@ -8,6 +8,7 @@ import br.com.fatecmogi.controller.dto.pedido.SolicitarTrocaPedidoCommand;
 import br.com.fatecmogi.controller.response.CustomPage;
 import br.com.fatecmogi.model.entity.cupom.CupomTroca;
 import br.com.fatecmogi.model.entity.pedido.Pedido;
+import br.com.fatecmogi.model.entity.pedido.SituacaoPedido;
 
 import java.util.List;
 
@@ -30,5 +31,7 @@ public interface PedidoService {
 	Pedido solicitarDevolucao(SolicitarDevolucaoPedidoCommand command);
 
 	CupomTroca aprovarTroca(Long id);
+
+	List<SituacaoPedido> listarSituacoesPedido();
 
 }
